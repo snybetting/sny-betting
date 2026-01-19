@@ -4,9 +4,8 @@ import { Loader2 } from 'lucide-react'
 // Google Sheets CSV URL (same as calculator)
 const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U7-XEQwXg2kRotwkID8Sa-jW85Tmc2hWRWVpOhHfqwd5kJlmpeDT_i_HNZPlDAMngNUvhEA/pub?gid=869956905&single=true&output=csv'
 
-// Fallback monthly data (most recent first)
+// Monthly data (most recent first) - excluding incomplete January 2026
 const FALLBACK_MONTHLY = [
-  { month: 'January 2026', profit: 0.23, bets: 108, roi: 0.21 },
   { month: 'December 2025', profit: 45.16, bets: 172, roi: 20.70 },
   { month: 'November 2025', profit: 32.90, bets: 227, roi: 12.63 },
   { month: 'October 2025', profit: -0.27, bets: 156, roi: -0.16 },
@@ -14,12 +13,12 @@ const FALLBACK_MONTHLY = [
   { month: 'August 2025', profit: 29.35, bets: 242, roi: 11.66 },
 ]
 
-// Fallback season data
+// Season data (excluding incomplete January 2026)
 const FALLBACK_SEASONS = {
   '2025/2026': {
-    totalBets: 1110,
-    profit: 116.53,
-    roi: 9.53,
+    totalBets: 1002,
+    profit: 116.30,
+    roi: 10.45,
     status: 'current',
   },
   '2024/2025': {
@@ -30,11 +29,11 @@ const FALLBACK_SEASONS = {
   },
 }
 
-// Fallback all-time data
+// All-time data (excluding incomplete January 2026)
 const FALLBACK_ALLTIME = {
-  totalBets: 3077,
-  profit: 350.26,
-  roi: 11.45,
+  totalBets: 2969,
+  profit: 350.03,
+  roi: 11.86,
 }
 
 // Cache for fetched data
