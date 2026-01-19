@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Quote } from 'lucide-react'
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // EDIT TESTIMONIALS HERE - Add new testimonials to this array
 const TESTIMONIALS = [
@@ -41,25 +41,22 @@ const TESTIMONIALS = [
   },
 ]
 
-function TestimonialCard({ name, quote, delay }) {
+function TestimonialCard({ name, quote }) {
   return (
-    <div
-      className="bg-[#404040] rounded-2xl p-7 md:p-8 relative group flex flex-col h-fit shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/10"
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div className="bg-[#404040] rounded-2xl p-6 md:p-8 relative flex flex-col h-full shadow-xl border border-white/10">
       {/* Quote icon */}
-      <div className="text-primary mb-5">
-        <Quote className="w-7 h-7" />
+      <div className="text-primary mb-4">
+        <Quote className="w-6 h-6" />
       </div>
 
-      {/* Quote text - full quote, no truncation */}
-      <p className="text-white/90 text-base leading-relaxed mb-6">
+      {/* Quote text */}
+      <p className="text-white/90 text-base leading-relaxed mb-6 flex-grow">
         "{quote}"
       </p>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-5 border-t border-white/10 mt-auto">
-        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+      <div className="flex items-center gap-3 pt-4 border-t border-white/10 mt-auto">
+        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
           <span className="text-dark font-semibold text-sm">{name.charAt(0)}</span>
         </div>
         <div className="font-semibold text-primary">{name}</div>
@@ -70,7 +67,66 @@ function TestimonialCard({ name, quote, delay }) {
 
 export default function Testimonials() {
   const [isVisible, setIsVisible] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
   const sectionRef = useRef(null)
+  const carouselRef = useRef(null)
+
+  // Minimum swipe distance
+  const minSwipeDistance = 50
+
+  // Get number of visible cards based on screen size
+  const getVisibleCount = () => {
+    if (typeof window === 'undefined') return 1
+    if (window.innerWidth >= 1024) return 3
+    if (window.innerWidth >= 768) return 2
+    return 1
+  }
+
+  const [visibleCount, setVisibleCount] = useState(1)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleCount(getVisibleCount())
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const maxIndex = Math.max(0, TESTIMONIALS.length - visibleCount)
+
+  const goToNext = () => {
+    setCurrentIndex(prev => Math.min(prev + 1, maxIndex))
+  }
+
+  const goToPrev = () => {
+    setCurrentIndex(prev => Math.max(prev - 1, 0))
+  }
+
+  const goToIndex = (index) => {
+    setCurrentIndex(Math.min(index, maxIndex))
+  }
+
+  // Touch handlers for swipe
+  const onTouchStart = (e) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    if (isLeftSwipe) goToNext()
+    if (isRightSwipe) goToPrev()
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,11 +145,14 @@ export default function Testimonials() {
     return () => observer.disconnect()
   }, [])
 
+  // Calculate dot indicators
+  const totalDots = maxIndex + 1
+
   return (
     <section
       ref={sectionRef}
       id="reviews"
-      className="section-light py-24 md:py-32 px-6"
+      className="section-light py-20 md:py-28 px-6 overflow-hidden"
     >
       <div className={`max-w-6xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
@@ -106,10 +165,67 @@ export default function Testimonials() {
           </p>
         </div>
 
-        {/* Testimonials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-start">
-          {TESTIMONIALS.map((testimonial, index) => (
-            <TestimonialCard key={index} {...testimonial} delay={index * 100} />
+        {/* Carousel container */}
+        <div className="relative">
+          {/* Navigation arrows - desktop only */}
+          <button
+            onClick={goToPrev}
+            disabled={currentIndex === 0}
+            className="hidden md:flex absolute -left-4 lg:-left-12 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-dark text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-dark/80 transition-all"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            onClick={goToNext}
+            disabled={currentIndex >= maxIndex}
+            className="hidden md:flex absolute -right-4 lg:-right-12 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center rounded-full bg-dark text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-dark/80 transition-all"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Carousel track */}
+          <div
+            ref={carouselRef}
+            className="overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div
+              className="flex transition-transform duration-300 ease-out"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
+              }}
+            >
+              {TESTIMONIALS.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 px-2 md:px-3"
+                  style={{ width: `${100 / visibleCount}%` }}
+                >
+                  <TestimonialCard {...testimonial} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-8">
+          {Array.from({ length: totalDots }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToIndex(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all ${
+                index === currentIndex
+                  ? 'bg-dark w-6'
+                  : 'bg-dark/30 hover:bg-dark/50'
+              }`}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
           ))}
         </div>
       </div>

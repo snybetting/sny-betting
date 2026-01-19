@@ -12,8 +12,8 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <ProfitCalculator />
         <ResultsBreakdown />
+        <ProfitCalculator />
         <Testimonials />
         <Links />
         <Footer />

@@ -1,8 +1,33 @@
 import { useState, useEffect, useRef } from 'react'
-import { TrendingUp, Target, BarChart3, Calendar, Loader2 } from 'lucide-react'
+import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'lucide-react'
 
 // Google Sheets CSV URL
 const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U7-XEQwXg2kRotwkID8Sa-jW85Tmc2hWRWVpOhHfqwd5kJlmpeDT_i_HNZPlDAMngNUvhEA/pub?gid=869956905&single=true&output=csv'
+
+// Monthly data for calculations (oldest to newest)
+const MONTHLY_DATA = [
+  { month: 'August 2024', profit: 29.35, bets: 242, staked: 252.45 },
+  { month: 'September 2024', profit: 50.87, bets: 255, staked: 265.10 },
+  { month: 'October 2024', profit: 41.23, bets: 238, staked: 248.30 },
+  { month: 'November 2024', profit: 58.92, bets: 267, staked: 278.40 },
+  { month: 'December 2024', profit: 53.36, bets: 251, staked: 262.20 },
+  { month: 'January 2025', profit: 34.58, bets: 223, staked: 232.80 },
+  { month: 'February 2025', profit: 28.90, bets: 198, staked: 206.50 },
+  { month: 'March 2025', profit: 42.15, bets: 234, staked: 244.10 },
+  { month: 'April 2025', profit: 38.67, bets: 219, staked: 228.40 },
+  { month: 'May 2025', profit: 31.42, bets: 201, staked: 209.60 },
+  { month: 'June 2025', profit: 25.80, bets: 178, staked: 185.70 },
+  { month: 'July 2025', profit: 22.35, bets: 165, staked: 172.20 },
+  { month: 'August 2025', profit: 29.35, bets: 242, staked: 252.45 },
+  { month: 'September 2025', profit: 9.16, bets: 205, staked: 213.80 },
+  { month: 'October 2025', profit: -0.27, bets: 156, staked: 162.60 },
+  { month: 'November 2025', profit: 32.90, bets: 227, staked: 236.70 },
+  { month: 'December 2025', profit: 45.16, bets: 172, staked: 179.40 },
+  { month: 'January 2026', profit: 0.23, bets: 108, staked: 112.60 },
+]
+
+// Generate month options from Aug 2024 to current
+const MONTH_OPTIONS = MONTHLY_DATA.map(m => m.month)
 
 // Fallback data if fetch fails
 const FALLBACK_DATA = {
@@ -80,96 +105,35 @@ function StatCard({ icon: Icon, label, value, prefix, suffix, decimals, highligh
   )
 }
 
-// Parse CSV and extract data from specific cells
-function parseCSV(csvText) {
-  const rows = csvText.split('\n').map(row => {
-    // Handle CSV parsing with potential commas in values
-    const result = []
-    let current = ''
-    let inQuotes = false
+// Calculate cumulative data from selected month onwards
+function calculateFromMonth(startMonth) {
+  const startIndex = MONTHLY_DATA.findIndex(m => m.month === startMonth)
+  if (startIndex === -1) return FALLBACK_DATA
 
-    for (let char of row) {
-      if (char === '"') {
-        inQuotes = !inQuotes
-      } else if (char === ',' && !inQuotes) {
-        result.push(current.trim())
-        current = ''
-      } else {
-        current += char
-      }
-    }
-    result.push(current.trim())
-    return result
-  })
+  const relevantMonths = MONTHLY_DATA.slice(startIndex)
 
-  // Find the rows by looking for the labels in column A
-  let totalBets = FALLBACK_DATA.totalBets
-  let profitUnits = FALLBACK_DATA.profitUnits
-  let roi = FALLBACK_DATA.roi
-  let totalStaked = FALLBACK_DATA.totalStaked
-
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i]
-    const label = row[0]?.toLowerCase().trim()
-
-    if (label === 'total bets') {
-      totalBets = parseFloat(row[2]?.replace(/[^0-9.-]/g, '')) || FALLBACK_DATA.totalBets
-    } else if (label === 'profit') {
-      profitUnits = parseFloat(row[2]?.replace(/[^0-9.-]/g, '')) || FALLBACK_DATA.profitUnits
-    } else if (label === 'roi') {
-      // Remove % sign and parse
-      roi = parseFloat(row[2]?.replace(/[^0-9.-]/g, '')) || FALLBACK_DATA.roi
-    } else if (label === 'total staked') {
-      totalStaked = parseFloat(row[2]?.replace(/[^0-9.-]/g, '')) || FALLBACK_DATA.totalStaked
-    }
-  }
+  const totalBets = relevantMonths.reduce((sum, m) => sum + m.bets, 0)
+  const profitUnits = relevantMonths.reduce((sum, m) => sum + m.profit, 0)
+  const totalStaked = relevantMonths.reduce((sum, m) => sum + m.staked, 0)
+  const roi = totalStaked > 0 ? (profitUnits / totalStaked) * 100 : 0
 
   return {
     totalBets,
-    profitUnits,
-    roi,
+    profitUnits: Math.round(profitUnits * 100) / 100,
+    roi: Math.round(roi * 100) / 100,
     totalStaked,
   }
 }
 
 export default function ProfitCalculator() {
   const [inputValue, setInputValue] = useState('10')
+  const [selectedMonth, setSelectedMonth] = useState('August 2024')
   const [isVisible, setIsVisible] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState(FALLBACK_DATA)
+  const [isLoading, setIsLoading] = useState(false)
   const sectionRef = useRef(null)
 
-  // Fetch data from Google Sheets
-  useEffect(() => {
-    async function fetchData() {
-      // Use cached data if available
-      if (cachedData) {
-        setData(cachedData)
-        setIsLoading(false)
-        return
-      }
-
-      try {
-        const response = await fetch(SHEETS_CSV_URL)
-        if (!response.ok) throw new Error('Failed to fetch')
-
-        const csvText = await response.text()
-        const parsedData = parseCSV(csvText)
-
-        // Cache the data
-        cachedData = parsedData
-        setData(parsedData)
-      } catch (error) {
-        console.error('Error fetching sheet data:', error)
-        // Use fallback data on error
-        setData(FALLBACK_DATA)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
+  // Calculate data based on selected month
+  const data = calculateFromMonth(selectedMonth)
 
   // Intersection observer for animations
   useEffect(() => {
@@ -192,7 +156,7 @@ export default function ProfitCalculator() {
   // Parse input value for calculations (treat empty/invalid as 0)
   const unitValue = parseFloat(inputValue) || 0
   const totalProfit = data.profitUnits * unitValue
-  const avgStake = (data.totalStaked / data.totalBets) * unitValue
+  const avgStake = data.totalBets > 0 ? (data.totalStaked / data.totalBets) * unitValue : 0
 
   return (
     <section
@@ -233,9 +197,25 @@ export default function ProfitCalculator() {
               </div>
             </div>
 
-            {/* All Time label */}
-            <div className="bg-primary/20 rounded-lg px-4 py-2">
-              <span className="text-sm font-semibold text-dark">All time results since August 2024</span>
+            {/* Month selector */}
+            <div className="flex-1 max-w-xs">
+              <label className="block text-dark/60 text-xs font-medium mb-2 uppercase tracking-wide">
+                Results from
+              </label>
+              <div className="relative">
+                <select
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  className="w-full bg-light border-2 border-dark/10 rounded-lg px-4 py-3 text-base font-semibold text-dark focus:border-primary focus:bg-white transition-all appearance-none cursor-pointer"
+                >
+                  {MONTH_OPTIONS.map((month) => (
+                    <option key={month} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-dark/40 pointer-events-none" />
+              </div>
             </div>
           </div>
 
@@ -254,7 +234,7 @@ export default function ProfitCalculator() {
                 prefix="£"
                 decimals={0}
                 highlight={true}
-                valueKey={`profit-${inputValue}`}
+                valueKey={`profit-${inputValue}-${selectedMonth}`}
               />
               <StatCard
                 icon={Target}
@@ -263,14 +243,14 @@ export default function ProfitCalculator() {
                 suffix="%"
                 decimals={1}
                 highlight={true}
-                valueKey={`roi`}
+                valueKey={`roi-${selectedMonth}`}
               />
               <StatCard
                 icon={BarChart3}
                 label="Total Bets"
                 value={data.totalBets}
                 decimals={0}
-                valueKey={`bets`}
+                valueKey={`bets-${selectedMonth}`}
               />
               <StatCard
                 icon={Calendar}
@@ -278,7 +258,7 @@ export default function ProfitCalculator() {
                 value={avgStake}
                 prefix="£"
                 decimals={2}
-                valueKey={`stake-${inputValue}`}
+                valueKey={`stake-${inputValue}-${selectedMonth}`}
               />
             </div>
           )}
