@@ -63,15 +63,14 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[#333333] px-5 py-4 shadow-lg border-b border-white/10">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[#333333] px-5 py-3 shadow-lg border-b border-white/10">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
+        <a href="#" className="flex items-center">
           <img
             src={logo}
             alt="SNY Betting"
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-9 h-9 rounded-full object-cover"
           />
-          <span className="text-white font-semibold">SNY</span>
         </a>
 
         {/* Hamburger */}
@@ -88,12 +87,16 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-nav z-[95] ${isMobileMenuOpen ? 'active' : ''}`}>
+        <div className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift" style={{
+          background: `linear-gradient(110deg, #333333 0%, #333333 25%, rgba(208, 240, 192, 0.08) 40%, rgba(208, 240, 192, 0.12) 50%, rgba(208, 240, 192, 0.08) 60%, #333333 75%, #333333 100%)`,
+          backgroundSize: '200% 100%',
+        }} />
         {NAV_LINKS.map((link) => (
           <a
             key={link.href}
             href={link.href}
             onClick={(e) => handleNavClick(e, link.href)}
-            className="text-white hover:text-primary transition-colors"
+            className="relative z-10 text-white text-2xl font-semibold py-4 px-8 rounded-xl hover:text-primary hover:bg-white/5 transition-all"
           >
             {link.label}
           </a>

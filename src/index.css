@@ -403,6 +403,21 @@ button:focus-visible {
 /* Mobile header spacer */
 @media (max-width: 767px) {
   body {
-    padding-top: 64px;
+    padding-top: 60px;
+  }
+
+  /* Better mobile padding for sections */
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Mobile button full width */
+@media (max-width: 639px) {
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -80,22 +80,22 @@ export default function Hero() {
         </div>
 
         {/* Main headline */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 animate-fade-up delay-200 text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 animate-fade-up delay-200 text-white leading-tight">
           Bet on sports like a professional
         </h1>
 
         {/* Subheadline */}
-        <p className="text-lg md:text-xl text-white/70 mb-10 max-w-xl mx-auto leading-relaxed animate-fade-up delay-300">
+        <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed animate-fade-up delay-300 px-2">
           Join <span className="text-[#D0F0C0] font-semibold">10,000+</span> members beating the bookies, consistently.
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center animate-fade-up delay-400">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center animate-fade-up delay-400 w-full sm:w-auto px-4 sm:px-0">
           <a
             href="https://t.me/+KRBoF_MnFuhhZDVk"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
+            className="btn-primary w-full sm:w-auto justify-center"
           >
             <Send className="w-5 h-5" />
             Join Free Telegram
@@ -105,7 +105,7 @@ export default function Hero() {
             href="https://t.me/+67pZuXXVM6pmZmRk"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
+            className="btn-primary w-full sm:w-auto justify-center"
           >
             <Users className="w-5 h-5" />
             Access every bet I place
