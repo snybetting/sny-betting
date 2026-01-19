@@ -276,12 +276,12 @@ export default function ResultsBreakdown() {
     <section
       ref={sectionRef}
       id="results"
-      className="section-light py-24 md:py-32 px-6"
+      className="section-light py-16 md:py-20 px-6"
     >
       <div className={`max-w-5xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
-        <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-dark">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 text-dark">
             Fully Tracked Results
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-dark/60 max-w-2xl mx-auto">
@@ -290,12 +290,7 @@ export default function ResultsBreakdown() {
         </div>
 
         {/* Monthly performance - horizontal scroll */}
-        <div className="mb-12">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-2 h-2 rounded-full bg-dark" />
-            <h3 className="text-lg font-semibold text-dark">Monthly Performance</h3>
-          </div>
-
+        <div className="mb-8">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <Loader2 className="w-6 h-6 text-primary animate-spin" />
