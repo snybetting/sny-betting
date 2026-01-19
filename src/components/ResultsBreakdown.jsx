@@ -276,33 +276,15 @@ export default function ResultsBreakdown() {
     <section
       ref={sectionRef}
       id="results"
-      className="relative py-24 md:py-32 px-6 bg-[#333333] overflow-hidden"
+      className="section-light py-24 md:py-32 px-6"
     >
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
-        style={{
-          background: `linear-gradient(
-            110deg,
-            #333333 0%,
-            #333333 25%,
-            rgba(208, 240, 192, 0.08) 40%,
-            rgba(208, 240, 192, 0.12) 50%,
-            rgba(208, 240, 192, 0.08) 60%,
-            #333333 75%,
-            #333333 100%
-          )`,
-          backgroundSize: '200% 100%',
-        }}
-      />
-
-      <div className={`relative z-10 max-w-5xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
+      <div className={`max-w-5xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-dark">
             Fully Tracked Results
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-white/60 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg lg:text-xl text-dark/60 max-w-2xl mx-auto">
             Every bet tracked. Full transparency.
           </p>
         </div>
@@ -310,8 +292,8 @@ export default function ResultsBreakdown() {
         {/* Monthly performance - horizontal scroll */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-2 h-2 rounded-full bg-primary" />
-            <h3 className="text-lg font-semibold text-white">Monthly Performance</h3>
+            <div className="w-2 h-2 rounded-full bg-dark" />
+            <h3 className="text-lg font-semibold text-dark">Monthly Performance</h3>
           </div>
 
           {isLoading ? (

@@ -162,15 +162,23 @@ export default function ProfitCalculator() {
     <section
       ref={sectionRef}
       id="calculator"
-      className="section-light py-16 md:py-20 px-6"
+      className="relative py-16 md:py-20 px-6 bg-[#333333] overflow-hidden"
     >
-      <div className={`max-w-5xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
+        style={{
+          background: `linear-gradient(110deg, #333333 0%, #333333 25%, rgba(208, 240, 192, 0.08) 40%, rgba(208, 240, 192, 0.12) 50%, rgba(208, 240, 192, 0.08) 60%, #333333 75%, #333333 100%)`,
+          backgroundSize: '200% 100%',
+        }}
+      />
+      <div className={`relative z-10 max-w-5xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-dark">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white">
             Calculate Your Profit
           </h2>
-          <p className="text-base md:text-lg text-dark/60 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-white/60 max-w-xl mx-auto">
             See what following my bets could have made you
           </p>
         </div>

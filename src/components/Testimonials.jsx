@@ -39,6 +39,10 @@ const TESTIMONIALS = [
     name: 'Jason',
     quote: "Initially joined on a 3 day free trial which went great with just short of £200 profit in that time. I had no hesitation in signing up monthly and I'm now £250 in profit in just 1 week. The amount of detail with the guides and information given is excellent. Would highly recommend.",
   },
+  {
+    name: 'David Hoang',
+    quote: "I have been with him the whole time I've been betting, everything just goes so smoothly, staking plan and everything. As long as you follow the advice nothing can go wrong. Cannot recommend the service enough, it even helped me quit monster to live longer.",
+  },
 ]
 
 function TestimonialCard({ name, quote }) {
