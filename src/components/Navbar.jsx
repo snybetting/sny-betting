@@ -62,28 +62,19 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[#333333] px-5 py-3 shadow-lg border-b border-white/10">
-        {/* Logo */}
-        <a href="#" className="flex items-center">
-          <img
-            src={logo}
-            alt="SNY Betting"
-            className="w-9 h-9 rounded-full object-cover"
-          />
-        </a>
-
-        {/* Hamburger */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
-          aria-label="Toggle menu"
-        >
+      {/* Mobile Floating Hamburger */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className={`md:hidden fixed top-5 right-5 z-[100] p-3 rounded-full backdrop-blur-sm bg-[#333333]/80 shadow-lg ${isMobileMenuOpen ? 'active' : ''}`}
+        aria-label="Toggle menu"
+        style={{ boxShadow: '0 4px 15px rgba(0,0,0,0.3)' }}
+      >
+        <div className={`hamburger-icon ${isMobileMenuOpen ? 'active' : ''}`}>
           <span></span>
           <span></span>
           <span></span>
-        </button>
-      </div>
+        </div>
+      </button>
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-nav z-[95] ${isMobileMenuOpen ? 'active' : ''}`}>
