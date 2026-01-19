@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import logo from '../assets/logo.png'
 
 const NAV_LINKS = [
-  { label: 'Calculator', href: '#calculator' },
   { label: 'Results', href: '#results' },
+  { label: 'Calculator', href: '#calculator' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'Links', href: '#links' },
 ]
