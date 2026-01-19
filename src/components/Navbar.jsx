@@ -63,7 +63,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-4 left-4 right-4 z-100 flex items-center justify-between bg-dark rounded-full px-4 py-3 shadow-lg border border-white/10">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-[100] flex items-center justify-between bg-[#333333] px-5 py-4 shadow-lg border-b border-white/10">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
           <img
@@ -71,12 +71,13 @@ export default function Navbar() {
             alt="SNY Betting"
             className="w-8 h-8 rounded-full object-cover"
           />
+          <span className="text-white font-semibold">SNY</span>
         </a>
 
         {/* Hamburger */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={`hamburger z-100 ${isMobileMenuOpen ? 'active' : ''}`}
+          className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
           aria-label="Toggle menu"
         >
           <span></span>
@@ -86,7 +87,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+      <div className={`mobile-nav z-[95] ${isMobileMenuOpen ? 'active' : ''}`}>
         {NAV_LINKS.map((link) => (
           <a
             key={link.href}
