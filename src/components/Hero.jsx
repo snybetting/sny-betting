@@ -108,7 +108,7 @@ export default function Hero() {
             className="btn-primary w-full sm:w-auto justify-center"
           >
             <Users className="w-5 h-5" />
-            Access every bet I place
+            Copy every bet I place
           </a>
         </div>
       </div>

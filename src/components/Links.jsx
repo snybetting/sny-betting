@@ -22,7 +22,7 @@ const LINKS = [
     icon: TelegramIcon,
   },
   {
-    title: 'Access every bet I place',
+    title: 'Copy every bet I place',
     href: 'https://t.me/+67pZuXXVM6pmZmRk',
     icon: Users,
   },
