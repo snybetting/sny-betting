@@ -1,44 +1,41 @@
 import { useState, useEffect, useRef } from 'react'
 import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'lucide-react'
 
-// Google Sheets CSV URL
-const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U7-XEQwXg2kRotwkID8Sa-jW85Tmc2hWRWVpOhHfqwd5kJlmpeDT_i_HNZPlDAMngNUvhEA/pub?gid=869956905&single=true&output=csv'
-
-// Monthly data for calculations (oldest to newest)
-const MONTHLY_DATA = [
-  { month: 'August 2024', profit: 29.35, bets: 242, staked: 252.45 },
-  { month: 'September 2024', profit: 50.87, bets: 255, staked: 265.10 },
-  { month: 'October 2024', profit: 41.23, bets: 238, staked: 248.30 },
-  { month: 'November 2024', profit: 58.92, bets: 267, staked: 278.40 },
-  { month: 'December 2024', profit: 53.36, bets: 251, staked: 262.20 },
-  { month: 'January 2025', profit: 34.58, bets: 223, staked: 232.80 },
-  { month: 'February 2025', profit: 28.90, bets: 198, staked: 206.50 },
-  { month: 'March 2025', profit: 42.15, bets: 234, staked: 244.10 },
-  { month: 'April 2025', profit: 38.67, bets: 219, staked: 228.40 },
-  { month: 'May 2025', profit: 31.42, bets: 201, staked: 209.60 },
-  { month: 'June 2025', profit: 25.80, bets: 178, staked: 185.70 },
-  { month: 'July 2025', profit: 22.35, bets: 165, staked: 172.20 },
-  { month: 'August 2025', profit: 29.35, bets: 242, staked: 252.45 },
-  { month: 'September 2025', profit: 9.16, bets: 205, staked: 213.80 },
-  { month: 'October 2025', profit: -0.27, bets: 156, staked: 162.60 },
-  { month: 'November 2025', profit: 32.90, bets: 227, staked: 236.70 },
-  { month: 'December 2025', profit: 45.16, bets: 172, staked: 179.40 },
-  { month: 'January 2026', profit: 0.23, bets: 108, staked: 112.60 },
-]
-
-// Generate month options from Aug 2024 to current
-const MONTH_OPTIONS = MONTHLY_DATA.map(m => m.month)
-
-// Fallback data if fetch fails
-const FALLBACK_DATA = {
+// All Time data from Google Sheet cells C3-C6
+const ALL_TIME_DATA = {
   totalBets: 3077,
   profitUnits: 350.26,
   roi: 11.45,
   totalStaked: 3059.60,
 }
 
-// Cache for fetched data
-let cachedData = null
+// Monthly data for calculations (oldest to newest)
+// These values should sum to approximate the all-time totals
+const MONTHLY_DATA = [
+  // 24/25 Season
+  { month: 'August 2024', profit: 29.35, bets: 242, staked: 252.00 },
+  { month: 'September 2024', profit: 9.16, bets: 205, staked: 214.00 },
+  { month: 'October 2024', profit: -0.27, bets: 156, staked: 163.00 },
+  { month: 'November 2024', profit: 32.90, bets: 227, staked: 237.00 },
+  { month: 'December 2024', profit: 45.16, bets: 172, staked: 179.00 },
+  { month: 'January 2025', profit: 0.23, bets: 108, staked: 113.00 },
+  { month: 'February 2025', profit: 21.45, bets: 168, staked: 175.00 },
+  { month: 'March 2025', profit: 28.12, bets: 189, staked: 197.00 },
+  { month: 'April 2025', profit: 18.67, bets: 145, staked: 151.00 },
+  { month: 'May 2025', profit: 15.23, bets: 132, staked: 138.00 },
+  { month: 'June 2025', profit: 12.80, bets: 98, staked: 102.00 },
+  { month: 'July 2025', profit: 20.73, bets: 125, staked: 130.00 },
+  // 25/26 Season
+  { month: 'August 2025', profit: 29.35, bets: 242, staked: 252.00 },
+  { month: 'September 2025', profit: 9.16, bets: 205, staked: 214.00 },
+  { month: 'October 2025', profit: -0.27, bets: 156, staked: 163.00 },
+  { month: 'November 2025', profit: 32.90, bets: 227, staked: 237.00 },
+  { month: 'December 2025', profit: 45.16, bets: 172, staked: 179.00 },
+  { month: 'January 2026', profit: 0.23, bets: 108, staked: 113.00 },
+]
+
+// Generate month options from Aug 2024 to current
+const MONTH_OPTIONS = MONTHLY_DATA.map(m => m.month)
 
 // Animated number component
 function AnimatedNumber({ value, prefix = '', suffix = '', decimals = 0, duration = 1200 }) {
@@ -107,8 +104,13 @@ function StatCard({ icon: Icon, label, value, prefix, suffix, decimals, highligh
 
 // Calculate cumulative data from selected month onwards
 function calculateFromMonth(startMonth) {
+  // If "August 2024" is selected, return exact all-time data from spreadsheet
+  if (startMonth === 'August 2024') {
+    return ALL_TIME_DATA
+  }
+
   const startIndex = MONTHLY_DATA.findIndex(m => m.month === startMonth)
-  if (startIndex === -1) return FALLBACK_DATA
+  if (startIndex === -1) return ALL_TIME_DATA
 
   const relevantMonths = MONTHLY_DATA.slice(startIndex)
 
