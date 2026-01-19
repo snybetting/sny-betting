@@ -73,7 +73,7 @@ function SeasonCard({ season, data }) {
   const isCurrent = data.status === 'current'
 
   return (
-    <div className={`card-dark rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden ${isCurrent ? 'border-primary/30' : ''}`}>
+    <div className={`bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
       {/* Current badge */}
       {isCurrent && (
         <div className="absolute top-4 right-4">
@@ -116,7 +116,7 @@ function AllTimeCard({ data }) {
   const isPositive = data.profit >= 0
 
   return (
-    <div className="card-dark rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden">
+    <div className="bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
       <div className="mb-6">
         <div className="text-3xl md:text-4xl text-white font-bold">All Time</div>
         <div className="text-white/50 text-sm mt-1">Since August 2024</div>
