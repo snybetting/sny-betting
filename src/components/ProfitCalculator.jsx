@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'lucide-react'
 
-// All Time data from Google Sheet cells C3-C6
+// All Time data from Google Sheet
 const ALL_TIME_DATA = {
   totalBets: 3077,
   profitUnits: 350.26,
@@ -9,31 +9,30 @@ const ALL_TIME_DATA = {
   totalStaked: 3059.60,
 }
 
-// Monthly data for calculations (oldest to newest)
-// Staked values calculated to match season totals:
-// - 24/25 season: 1,836.75 total staked (avg 0.9338 per bet)
-// - 25/26 season: 1,222.85 total staked (avg 1.1017 per bet)
+// Monthly data hardcoded from spreadsheet (oldest to newest)
+// 24/25 Season: 1,967 bets, 233.73 profit, 1,836.75 staked, 12.73% ROI
+// 25/26 Season: 1,110 bets, 116.53 profit, 1,222.85 staked, 9.53% ROI
 const MONTHLY_DATA = [
-  // 24/25 Season (total staked: 1,836.75, ROI: 12.73%)
-  { month: 'August 2024', profit: 29.35, bets: 242, staked: 226.00 },
-  { month: 'September 2024', profit: 9.16, bets: 205, staked: 191.40 },
-  { month: 'October 2024', profit: -0.27, bets: 156, staked: 145.70 },
-  { month: 'November 2024', profit: 32.90, bets: 227, staked: 212.00 },
-  { month: 'December 2024', profit: 45.16, bets: 172, staked: 160.60 },
-  { month: 'January 2025', profit: 0.23, bets: 108, staked: 100.85 },
-  { month: 'February 2025', profit: 21.45, bets: 168, staked: 156.90 },
-  { month: 'March 2025', profit: 28.12, bets: 189, staked: 176.50 },
-  { month: 'April 2025', profit: 18.67, bets: 145, staked: 135.40 },
-  { month: 'May 2025', profit: 15.23, bets: 132, staked: 123.30 },
-  { month: 'June 2025', profit: 12.80, bets: 98, staked: 91.50 },
-  { month: 'July 2025', profit: 20.73, bets: 125, staked: 116.60 },
-  // 25/26 Season (total staked: 1,222.85, ROI: 9.53%)
-  { month: 'August 2025', profit: 29.35, bets: 242, staked: 266.60 },
-  { month: 'September 2025', profit: 9.16, bets: 205, staked: 225.85 },
-  { month: 'October 2025', profit: -0.27, bets: 156, staked: 171.90 },
-  { month: 'November 2025', profit: 32.90, bets: 227, staked: 250.10 },
-  { month: 'December 2025', profit: 45.16, bets: 172, staked: 189.50 },
-  { month: 'January 2026', profit: 0.23, bets: 108, staked: 118.90 },
+  // 24/25 Season
+  { month: 'August 2024', bets: 427, profit: 48.43, staked: 347.95 },
+  { month: 'September 2024', bets: 238, profit: 41.94, staked: 213.85 },
+  { month: 'October 2024', bets: 243, profit: 3.82, staked: 226.20 },
+  { month: 'November 2024', bets: 124, profit: 13.86, staked: 123.05 },
+  { month: 'December 2024', bets: 59, profit: 2.39, staked: 58.75 },
+  { month: 'January 2025', bets: 146, profit: -0.91, staked: 136.00 },
+  { month: 'February 2025', bets: 94, profit: 10.26, staked: 98.85 },
+  { month: 'March 2025', bets: 84, profit: 13.68, staked: 86.50 },
+  { month: 'April 2025', bets: 118, profit: 1.06, staked: 124.00 },
+  { month: 'May 2025', bets: 150, profit: 18.13, staked: 148.20 },
+  { month: 'June 2025', bets: 160, profit: 66.65, staked: 149.30 },
+  { month: 'July 2025', bets: 124, profit: 14.42, staked: 124.10 },
+  // 25/26 Season
+  { month: 'August 2025', bets: 242, profit: 29.35, staked: 251.70 },
+  { month: 'September 2025', bets: 205, profit: 9.16, staked: 214.45 },
+  { month: 'October 2025', bets: 156, profit: -0.27, staked: 168.45 },
+  { month: 'November 2025', bets: 227, profit: 32.90, staked: 260.45 },
+  { month: 'December 2025', bets: 172, profit: 45.16, staked: 218.20 },
+  { month: 'January 2026', bets: 108, profit: 0.23, staked: 109.60 },
 ]
 
 // Generate month options from Aug 2024 to current
