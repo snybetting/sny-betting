@@ -41,28 +41,28 @@ let cachedResultsData = null
 
 function MonthCard({ month, profit, bets, roi, delay }) {
   const isPositive = profit >= 0
-  const valueColor = isPositive ? 'text-primary' : 'text-red-400'
+  const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
     <div
-      className="bg-[#3d3d3d] rounded-xl p-6 min-w-[200px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="bg-[#3d3d3d] rounded-xl p-5 min-w-[180px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Month name - white */}
-      <div className="text-white text-sm mb-4">{month}</div>
+      {/* Month label - small, muted */}
+      <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-3">{month}</div>
 
-      {/* Profit - colored value, bold, large */}
-      <div className={`text-2xl font-bold mb-3 ${valueColor}`}>
-        {isPositive ? '+' : ''}{profit.toFixed(2)} units
+      {/* Profit - hero stat, large and bold */}
+      <div className={`text-3xl font-bold mb-4 ${profitColor}`}>
+        {isPositive ? '+' : ''}{profit.toFixed(2)}
+        <span className="text-lg font-semibold ml-1">units</span>
       </div>
 
-      {/* ROI - colored based on profit */}
-      <div className={`text-sm mb-2 ${valueColor}`}>
-        {isPositive ? '+' : ''}{roi.toFixed(2)}% ROI
+      {/* Secondary stats - ROI and bets on one line, muted */}
+      <div className="flex items-center gap-3 text-white/50 text-sm">
+        <span>{isPositive ? '+' : ''}{roi.toFixed(1)}% ROI</span>
+        <span className="text-white/30">•</span>
+        <span>{bets} bets</span>
       </div>
-
-      {/* Bets - white */}
-      <div className="text-sm text-white">{bets} bets</div>
     </div>
   )
 }
@@ -70,6 +70,7 @@ function MonthCard({ month, profit, bets, roi, delay }) {
 function SeasonCard({ season, data }) {
   const isPositive = data.profit >= 0
   const isCurrent = data.status === 'current'
+  const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
     <div className={`bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
@@ -82,30 +83,21 @@ function SeasonCard({ season, data }) {
         </div>
       )}
 
-      <div className="mb-6">
-        <div className="text-white/50 text-sm font-medium uppercase tracking-wide mb-1">Season</div>
-        <div className="text-3xl md:text-4xl text-white font-bold">{season}</div>
+      {/* Season label - small, muted */}
+      <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Season</div>
+      <div className="text-2xl md:text-3xl text-white font-bold mb-5">{season}</div>
+
+      {/* Profit - hero stat */}
+      <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
+        {isPositive ? '+' : ''}{data.profit.toFixed(2)}
+        <span className="text-xl font-semibold ml-1">units</span>
       </div>
 
-      <div className="flex justify-between gap-6">
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Profit</div>
-          <div className={`text-xl md:text-2xl font-bold ${isPositive ? 'text-primary' : 'text-red-400'}`}>
-            {isPositive ? '+' : ''}{data.profit.toFixed(2)}u
-          </div>
-        </div>
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">ROI</div>
-          <div className={`text-xl md:text-2xl font-bold ${isPositive ? 'text-primary' : 'text-red-400'}`}>
-            {isPositive ? '+' : ''}{data.roi.toFixed(2)}%
-          </div>
-        </div>
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Bets</div>
-          <div className="text-xl md:text-2xl font-bold text-white">
-            {data.totalBets.toLocaleString()}
-          </div>
-        </div>
+      {/* Secondary stats - ROI and bets, muted */}
+      <div className="flex items-center gap-4 text-white/50 text-sm">
+        <span>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+        <span className="text-white/30">•</span>
+        <span>{data.totalBets.toLocaleString()} bets</span>
       </div>
     </div>
   )
@@ -113,33 +105,25 @@ function SeasonCard({ season, data }) {
 
 function AllTimeCard({ data }) {
   const isPositive = data.profit >= 0
+  const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
     <div className="bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
-      <div className="mb-6">
-        <div className="text-3xl md:text-4xl text-white font-bold">All Time</div>
-        <div className="text-white/50 text-sm mt-1">Since August 2024</div>
+      {/* Title - small, muted */}
+      <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
+      <div className="text-2xl md:text-3xl text-white font-bold mb-5">All Time</div>
+
+      {/* Profit - hero stat */}
+      <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
+        {isPositive ? '+' : ''}{data.profit.toFixed(2)}
+        <span className="text-xl font-semibold ml-1">units</span>
       </div>
 
-      <div className="flex justify-between gap-6">
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Profit</div>
-          <div className={`text-xl md:text-2xl font-bold ${isPositive ? 'text-primary' : 'text-red-400'}`}>
-            {isPositive ? '+' : ''}{data.profit.toFixed(2)}u
-          </div>
-        </div>
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">ROI</div>
-          <div className={`text-xl md:text-2xl font-bold ${isPositive ? 'text-primary' : 'text-red-400'}`}>
-            {isPositive ? '+' : ''}{data.roi.toFixed(2)}%
-          </div>
-        </div>
-        <div>
-          <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Bets</div>
-          <div className="text-xl md:text-2xl font-bold text-white">
-            {data.totalBets.toLocaleString()}
-          </div>
-        </div>
+      {/* Secondary stats - ROI and bets, muted */}
+      <div className="flex items-center gap-4 text-white/50 text-sm">
+        <span>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+        <span className="text-white/30">•</span>
+        <span>{data.totalBets.toLocaleString()} bets</span>
       </div>
     </div>
   )
