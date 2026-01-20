@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { label: 'Results', href: '#results' },
   { label: 'Profit Calculator', href: '#calculator' },
   { label: 'Reviews', href: '#reviews' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Get Started', href: '#links' },
   { label: 'Contact Me', href: 'https://t.me/snybetting', external: true },
 ]
