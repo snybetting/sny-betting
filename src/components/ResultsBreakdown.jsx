@@ -114,7 +114,7 @@ function EmbeddedGraph({ data, maxY, interval = 20, gradientId }) {
     <div className="mt-4 pt-4 border-t border-white/10">
       <div className="h-[200px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#D0F0C0" stopOpacity={0.3} />
@@ -138,7 +138,7 @@ function EmbeddedGraph({ data, maxY, interval = 20, gradientId }) {
               domain={[0, maxY]}
               ticks={ticks}
               tickFormatter={(value) => `${value}`}
-              width={35}
+              width={40}
             />
             <Tooltip content={<CustomTooltip />} />
             <Area
