@@ -44,11 +44,11 @@ function LinkCard({ title, href, icon: Icon, delay }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-between p-5 rounded-xl transition-all duration-300 bg-[#4a4a4a] hover:bg-[#555555] hover:-translate-y-1"
+      className="group flex items-center justify-between p-5 rounded-xl transition-all duration-300 bg-[#404040] hover:bg-[#4a4a4a] hover:-translate-y-1 shadow-lg"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/15 text-primary group-hover:bg-primary/25 transition-colors">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/20 text-primary group-hover:bg-primary/30 transition-colors">
           <Icon />
         </div>
         <div className="font-semibold text-white">{title}</div>
@@ -83,30 +83,12 @@ export default function Links() {
     <section
       ref={sectionRef}
       id="links"
-      className="relative py-24 md:py-32 px-6 bg-[#333333] overflow-hidden"
+      className="section-light py-16 md:py-20 px-6"
     >
-      {/* Animated gradient background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
-        style={{
-          background: `linear-gradient(
-            110deg,
-            #333333 0%,
-            #333333 25%,
-            rgba(208, 240, 192, 0.08) 40%,
-            rgba(208, 240, 192, 0.12) 50%,
-            rgba(208, 240, 192, 0.08) 60%,
-            #333333 75%,
-            #333333 100%
-          )`,
-          backgroundSize: '200% 100%',
-        }}
-      />
-
-      <div className={`relative z-10 max-w-2xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
+      <div className={`max-w-2xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark">
             Get Started
           </h2>
         </div>

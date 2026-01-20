@@ -114,9 +114,26 @@ export default function FAQ() {
     <section
       ref={sectionRef}
       id="faq"
-      className="py-16 md:py-20 px-6 bg-[#333333]"
+      className="relative py-16 md:py-20 px-6 bg-[#333333] overflow-hidden"
     >
-      <div className={`max-w-3xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
+        style={{
+          background: `linear-gradient(
+            110deg,
+            #333333 0%,
+            #333333 25%,
+            rgba(208, 240, 192, 0.08) 40%,
+            rgba(208, 240, 192, 0.12) 50%,
+            rgba(208, 240, 192, 0.08) 60%,
+            #333333 75%,
+            #333333 100%
+          )`,
+          backgroundSize: '200% 100%',
+        }}
+      />
+      <div className={`relative z-10 max-w-3xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
