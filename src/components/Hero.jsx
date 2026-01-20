@@ -69,8 +69,9 @@ export default function Hero() {
 
         {/* Logo with rotating border */}
         <div className="mb-7 animate-fade-up delay-100">
-          <div className="logo-border-wrapper relative w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full p-[2px]">
-            <div className="w-full h-full rounded-full overflow-hidden bg-[#333333]">
+          <div className="logo-border-wrapper relative w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full">
+            <div className="logo-border-spin absolute inset-0 rounded-full" />
+            <div className="absolute inset-[2px] rounded-full overflow-hidden bg-[#333333]">
               <img
                 src={logo}
                 alt="SNY Betting"

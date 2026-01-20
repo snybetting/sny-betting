@@ -325,6 +325,9 @@ button:focus-visible {
 /* Rotating logo border */
 .logo-border-wrapper {
   position: relative;
+}
+
+.logo-border-spin {
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
