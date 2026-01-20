@@ -201,7 +201,7 @@ export default function ProfitCalculator() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="10"
-                  className="w-full bg-light border-2 border-dark/10 rounded-lg px-3 py-3 pl-10 text-2xl font-bold text-dark focus:border-primary focus:bg-white transition-all placeholder:text-dark/30"
+                  className="w-full h-[58px] bg-light border-2 border-dark/10 rounded-lg px-3 pl-10 text-2xl font-bold text-dark focus:border-primary focus:bg-white transition-all placeholder:text-dark/30"
                   min="0"
                 />
               </div>
@@ -216,7 +216,7 @@ export default function ProfitCalculator() {
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="w-full bg-light border-2 border-dark/10 rounded-lg px-4 py-3 text-base font-semibold text-dark focus:border-primary focus:bg-white transition-all appearance-none cursor-pointer"
+                  className="w-full h-[58px] bg-light border-2 border-dark/10 rounded-lg px-4 text-base font-semibold text-dark focus:border-primary focus:bg-white transition-all appearance-none cursor-pointer"
                 >
                   {MONTH_OPTIONS.map((month) => (
                     <option key={month} value={month}>
