@@ -5,7 +5,8 @@ const NAV_LINKS = [
   { label: 'Results', href: '#results' },
   { label: 'Profit Calculator', href: '#calculator' },
   { label: 'Reviews', href: '#reviews' },
-  { label: 'Links', href: '#links' },
+  { label: 'Get Started', href: '#links' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Navbar() {
