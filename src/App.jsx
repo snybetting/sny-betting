@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import ProfitCalculator from './components/ProfitCalculator'
 import ResultsBreakdown from './components/ResultsBreakdown'
 import Testimonials from './components/Testimonials'
+import FAQ from './components/FAQ'
 import Links from './components/Links'
 import Footer from './components/Footer'
 
@@ -15,6 +16,7 @@ export default function App() {
         <ResultsBreakdown />
         <ProfitCalculator />
         <Testimonials />
+        <FAQ />
         <Links />
         <Footer />
       </main>
