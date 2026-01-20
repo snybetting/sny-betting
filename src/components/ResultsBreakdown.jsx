@@ -59,7 +59,7 @@ function MonthCard({ month, profit, bets, roi, delay }) {
 
   return (
     <div
-      className="bg-[#3d3d3d] rounded-xl p-5 min-w-[180px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="bg-[#3d3d3d] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Month label - small, muted */}
@@ -68,14 +68,14 @@ function MonthCard({ month, profit, bets, roi, delay }) {
       {/* Profit - hero stat, large and bold */}
       <div className={`text-3xl font-bold mb-4 ${profitColor}`}>
         {isPositive ? '+' : ''}{profit.toFixed(2)}
-        <span className="text-lg font-semibold ml-1">units</span>
+        <span className="text-lg font-semibold ml-1">units profit</span>
       </div>
 
-      {/* Secondary stats - ROI and bets on one line, muted */}
-      <div className="flex items-center gap-3 text-white/50 text-sm">
-        <span>{isPositive ? '+' : ''}{roi.toFixed(1)}% ROI</span>
+      {/* Secondary stats - ROI (colored, medium) • Bets (muted, smaller) */}
+      <div className="flex items-center gap-2">
+        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{roi.toFixed(1)}% ROI</span>
         <span className="text-white/30">•</span>
-        <span>{bets} bets</span>
+        <span className="text-white/50 text-sm">{bets} bets</span>
       </div>
     </div>
   )
