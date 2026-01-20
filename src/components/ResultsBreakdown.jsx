@@ -59,23 +59,33 @@ function MonthCard({ month, profit, bets, roi, delay }) {
 
   return (
     <div
-      className="bg-[#3d3d3d] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="relative overflow-hidden rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Month label - small, lighter */}
-      <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-3">{month}</div>
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 z-0 animate-gradient-shift"
+        style={{
+          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
+          backgroundSize: '200% 200%',
+        }}
+      />
+      <div className="relative z-10">
+        {/* Month label - small, lighter */}
+        <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-3">{month}</div>
 
-      {/* Profit - hero stat, large and bold */}
-      <div className={`text-3xl font-bold mb-4 ${profitColor}`}>
-        {isPositive ? '+' : ''}{profit.toFixed(2)}
-        <span className="text-lg font-semibold ml-1">units profit</span>
-      </div>
+        {/* Profit - hero stat, large and bold */}
+        <div className={`text-3xl font-bold mb-4 ${profitColor}`}>
+          {isPositive ? '+' : ''}{profit.toFixed(2)}
+          <span className="text-lg font-semibold ml-1">units profit</span>
+        </div>
 
-      {/* Secondary stats - ROI (colored, medium) • Bets (lighter, smaller) */}
-      <div className="flex items-center gap-2">
-        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{roi.toFixed(1)}% ROI</span>
-        <span className="text-white/40">•</span>
-        <span className="text-white/80 text-sm">{bets} bets</span>
+        {/* Secondary stats - ROI (colored, medium) • Bets (lighter, smaller) */}
+        <div className="flex items-center gap-2">
+          <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{roi.toFixed(1)}% ROI</span>
+          <span className="text-white/40">•</span>
+          <span className="text-white/80 text-sm">{bets} bets</span>
+        </div>
       </div>
     </div>
   )
@@ -87,31 +97,41 @@ function SeasonCard({ season, data }) {
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
-    <div className={`bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
+    <div className={`rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 z-0 animate-gradient-shift"
+        style={{
+          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
+          backgroundSize: '200% 200%',
+        }}
+      />
       {/* Current badge */}
       {isCurrent && (
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-20">
           <span className="px-3 py-1 bg-primary text-dark text-xs font-semibold rounded-full uppercase tracking-wide">
             Current
           </span>
         </div>
       )}
 
-      {/* Season label - small, lighter */}
-      <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Season</div>
-      <div className="text-2xl md:text-3xl text-white font-bold mb-5">{season}</div>
+      <div className="relative z-10">
+        {/* Season label - small, lighter */}
+        <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Season</div>
+        <div className="text-2xl md:text-3xl text-white font-bold mb-5">{season}</div>
 
-      {/* Profit - hero stat */}
-      <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
-        {isPositive ? '+' : ''}{data.profit.toFixed(2)}
-        <span className="text-xl font-semibold ml-1">units profit</span>
-      </div>
+        {/* Profit - hero stat */}
+        <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
+          {isPositive ? '+' : ''}{data.profit.toFixed(2)}
+          <span className="text-xl font-semibold ml-1">units profit</span>
+        </div>
 
-      {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
-      <div className="flex items-center gap-3">
-        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
-        <span className="text-white/40">•</span>
-        <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
+        {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
+        <div className="flex items-center gap-3">
+          <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+          <span className="text-white/40">•</span>
+          <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
+        </div>
       </div>
     </div>
   )
@@ -122,22 +142,32 @@ function AllTimeCard({ data }) {
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
-    <div className="bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
-      {/* Title - small, lighter */}
-      <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
-      <div className="text-2xl md:text-3xl text-white font-bold mb-5">All Time</div>
+    <div className="rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 z-0 animate-gradient-shift"
+        style={{
+          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
+          backgroundSize: '200% 200%',
+        }}
+      />
+      <div className="relative z-10">
+        {/* Title - small, lighter */}
+        <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
+        <div className="text-2xl md:text-3xl text-white font-bold mb-5">All Time</div>
 
-      {/* Profit - hero stat */}
-      <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
-        {isPositive ? '+' : ''}{data.profit.toFixed(2)}
-        <span className="text-xl font-semibold ml-1">units profit</span>
-      </div>
+        {/* Profit - hero stat */}
+        <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
+          {isPositive ? '+' : ''}{data.profit.toFixed(2)}
+          <span className="text-xl font-semibold ml-1">units profit</span>
+        </div>
 
-      {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
-      <div className="flex items-center gap-3">
-        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
-        <span className="text-white/40">•</span>
-        <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
+        {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
+        <div className="flex items-center gap-3">
+          <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+          <span className="text-white/40">•</span>
+          <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
+        </div>
       </div>
     </div>
   )
