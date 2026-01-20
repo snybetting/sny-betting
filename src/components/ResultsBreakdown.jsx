@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Loader2, ChevronRight } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
 // All-time cumulative profit data for the graph (starts at 0)
@@ -384,19 +384,11 @@ export default function ResultsBreakdown() {
               <Loader2 className="w-6 h-6 text-primary animate-spin" />
             </div>
           ) : (
-            <div className="relative">
-              <div className="overflow-x-auto pb-4 -mx-6 px-6 scrollbar-hide">
-                <div className="flex gap-5">
-                  {monthlyData.map((data, index) => (
-                    <MonthCard key={data.month} {...data} delay={index * 100} />
-                  ))}
-                </div>
-              </div>
-              {/* Mobile swipe indicator */}
-              <div className="md:hidden absolute right-0 top-0 bottom-4 w-16 pointer-events-none bg-gradient-to-l from-light to-transparent flex items-center justify-end pr-2">
-                <div className="flex items-center gap-1 text-dark/40 animate-pulse">
-                  <ChevronRight className="w-5 h-5" />
-                </div>
+            <div className="overflow-x-auto pb-4 -mx-6 pl-6 pr-3 md:px-6 scrollbar-hide">
+              <div className="flex gap-4 md:gap-5">
+                {monthlyData.map((data, index) => (
+                  <MonthCard key={data.month} {...data} delay={index * 100} />
+                ))}
               </div>
             </div>
           )}
