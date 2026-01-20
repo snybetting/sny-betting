@@ -49,24 +49,26 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto mt-2">
-        {/* Pill badge with animated border */}
-        <a
-          href="https://t.me/+KRBoF_MnFuhhZDVk"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="animated-border-btn relative inline-flex items-center gap-2 mb-10 animate-fade-up transition-shadow duration-300 ease-out hover:shadow-[0_0_15px_rgba(208,240,192,0.25),0_0_30px_rgba(208,240,192,0.15)]"
-          style={{
-            backgroundColor: '#D0F0C0',
-            color: '#333333',
-            fontSize: '0.875rem',
-            fontWeight: '700',
-            padding: '0.5rem 1rem',
-            borderRadius: '9999px',
-          }}
-        >
-          Free bet shared for tonight
-          <ArrowRight className="w-4 h-4" />
-        </a>
+        {/* Pill badge with animated snake border */}
+        <div className="snake-border-wrapper relative inline-flex mb-10 animate-fade-up rounded-full p-[2px]">
+          <div className="snake-border-glow" />
+          <a
+            href="https://t.me/+KRBoF_MnFuhhZDVk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative inline-flex items-center gap-2 rounded-full transition-shadow duration-300 ease-out hover:shadow-[0_0_15px_rgba(208,240,192,0.25),0_0_30px_rgba(208,240,192,0.15)]"
+            style={{
+              backgroundColor: '#D0F0C0',
+              color: '#333333',
+              fontSize: '0.875rem',
+              fontWeight: '700',
+              padding: '0.5rem 1rem',
+            }}
+          >
+            Free bet shared for tonight
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
 
         {/* Logo */}
         <div className="mb-7 animate-fade-up delay-100">
