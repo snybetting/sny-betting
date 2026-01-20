@@ -158,12 +158,9 @@ export default function Testimonials() {
       <div className={`max-w-6xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-dark">
-            Trusted by Thousands
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark">
+            Member Reviews
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-dark/60 max-w-xl mx-auto">
-            Feedback from members
-          </p>
         </div>
 
         {/* Carousel container */}
