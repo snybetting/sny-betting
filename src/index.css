@@ -322,30 +322,6 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Rotating logo border */
-.logo-border-wrapper {
-  position: relative;
-}
-
-.logo-border-spin {
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 330deg,
-    #D0F0C0 345deg,
-    #8fdb6a 360deg
-  );
-  animation: logo-border-rotate 3s linear infinite;
-}
-
-@keyframes logo-border-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 /* Link hover effect */
 .link-hover {

@@ -67,17 +67,14 @@ export default function Hero() {
           <ArrowRight className="w-4 h-4" />
         </a>
 
-        {/* Logo with rotating border */}
+        {/* Logo */}
         <div className="mb-7 animate-fade-up delay-100">
-          <div className="logo-border-wrapper relative w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full">
-            <div className="logo-border-spin absolute inset-0 rounded-full" />
-            <div className="absolute inset-[2px] rounded-full overflow-hidden bg-[#333333]">
-              <img
-                src={logo}
-                alt="SNY Betting"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full overflow-hidden border-2 border-primary/30">
+            <img
+              src={logo}
+              alt="SNY Betting"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
 
