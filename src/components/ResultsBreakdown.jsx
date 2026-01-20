@@ -4,13 +4,27 @@ import { Loader2 } from 'lucide-react'
 // Google Sheets CSV URL (same as calculator)
 const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U7-XEQwXg2kRotwkID8Sa-jW85Tmc2hWRWVpOhHfqwd5kJlmpeDT_i_HNZPlDAMngNUvhEA/pub?gid=869956905&single=true&output=csv'
 
-// Monthly data (most recent first) - excluding incomplete January 2026
+// Monthly data (most recent first) - August 2024 to December 2025
 const FALLBACK_MONTHLY = [
+  // 25/26 Season
   { month: 'December 2025', profit: 45.16, bets: 172, roi: 20.70 },
   { month: 'November 2025', profit: 32.90, bets: 227, roi: 12.63 },
   { month: 'October 2025', profit: -0.27, bets: 156, roi: -0.16 },
   { month: 'September 2025', profit: 9.16, bets: 205, roi: 4.27 },
   { month: 'August 2025', profit: 29.35, bets: 242, roi: 11.66 },
+  // 24/25 Season
+  { month: 'July 2025', profit: 3.05, bets: 50, roi: 6.10 },
+  { month: 'June 2025', profit: -5.56, bets: 100, roi: -5.56 },
+  { month: 'May 2025', profit: 14.03, bets: 210, roi: 6.67 },
+  { month: 'April 2025', profit: 12.21, bets: 205, roi: 5.95 },
+  { month: 'March 2025', profit: 11.25, bets: 204, roi: 5.51 },
+  { month: 'February 2025', profit: 14.84, bets: 172, roi: 8.62 },
+  { month: 'January 2025', profit: 23.95, bets: 217, roi: 11.03 },
+  { month: 'December 2024', profit: 33.55, bets: 239, roi: 14.05 },
+  { month: 'November 2024', profit: 39.10, bets: 211, roi: 18.53 },
+  { month: 'October 2024', profit: 40.34, bets: 204, roi: 19.78 },
+  { month: 'September 2024', profit: 41.29, bets: 180, roi: 22.96 },
+  { month: 'August 2024', profit: 17.70, bets: 174, roi: 10.17 },
 ]
 
 // Season data (excluding incomplete January 2026)
