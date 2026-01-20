@@ -18,8 +18,8 @@ const FAQ_DATA = [
           className="text-primary underline hover:text-primary/80 transition-colors"
         >
           Telegram channel
-        </a>{' '}
-        and turn on notifications.
+        </a>
+        .
       </>
     ),
   },
