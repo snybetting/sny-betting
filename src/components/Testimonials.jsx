@@ -2,46 +2,47 @@ import { useState, useEffect, useRef } from 'react'
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // EDIT TESTIMONIALS HERE - Add new testimonials to this array
+// Ordered by impact: specific results first, then detailed endorsements
 const TESTIMONIALS = [
+  {
+    name: 'Jason',
+    quote: "Initially joined on a 3 day free trial which went great with just short of £200 profit in that time. I had no hesitation in signing up monthly and I'm now £250 in profit in just 1 week. The amount of detail with the guides and information given is excellent. Would highly recommend.",
+  },
   {
     name: 'Thomas',
     quote: "SNY has completely transformed the way I gamble. He's fully transparent with his P&L and does the hard work of consistently identifying genuine value bets. As long as you follow the advised bets and staking plan, the edge is clear. Not every bet wins, but that's just variance — long-term profitability is the goal, and the process delivers.",
-  },
-  {
-    name: 'Mikey Lawton',
-    quote: "Used other tipsters before who tip bets at ridiculous units plus an expensive membership but since I have gone with yourself I have found myself consistently making money each month and the membership is definitely worth the money.",
-  },
-  {
-    name: 'James Wallace',
-    quote: "Great service which is open, honest and clear. Can tell Sonny knows what he's doing and that there is a lot of profit to be made!",
-  },
-  {
-    name: 'Adam Crane',
-    quote: "Sonny's service is top drawer. I have been a member for a while now and look forward to his tips and analysis daily. Thanks",
-  },
-  {
-    name: 'Lewis Cook',
-    quote: "Even though it's not been the best month, it's been so beneficial to learn about EV and actually betting on the value of the outcome. Over time you will win as variance is something you will always have to deal with. This has completely changed my perspective of betting.",
   },
   {
     name: 'Cameron',
     quote: "Sonny's service is absolutely top notch, if you bet on football then this is definitely the service for you. His results speak for themselves, even in the bad periods he always seems to bounce back. The time and effort Sonny puts in shows in his picks and the results he produces for us.",
   },
   {
-    name: 'Anton',
-    quote: "Sonny is one of the few tipsters who shows full transparency in his wins and losses. No hassle to get assistance if you are unsure or inexperienced. I've been in the VIP for a while now and it's one of the best I've used.",
-  },
-  {
     name: 'JK',
     quote: "Immediately I recognised the immense sense of community that he has built. He is extremely responsive, committed to educating subscribers to becoming profitable bettors. Most importantly his bets are always thoroughly researched. The VIP group chat alone is worth the monthly investment.",
   },
   {
-    name: 'Jason',
-    quote: "Initially joined on a 3 day free trial which went great with just short of £200 profit in that time. I had no hesitation in signing up monthly and I'm now £250 in profit in just 1 week. The amount of detail with the guides and information given is excellent. Would highly recommend.",
+    name: 'Anton',
+    quote: "Sonny is one of the few tipsters who shows full transparency in his wins and losses. No hassle to get assistance if you are unsure or inexperienced. I've been in the VIP for a while now and it's one of the best I've used.",
+  },
+  {
+    name: 'Mikey Lawton',
+    quote: "Used other tipsters before who tip bets at ridiculous units plus an expensive membership but since I have gone with yourself I have found myself consistently making money each month and the membership is definitely worth the money.",
+  },
+  {
+    name: 'Lewis Cook',
+    quote: "Even though it's not been the best month, it's been so beneficial to learn about EV and actually betting on the value of the outcome. Over time you will win as variance is something you will always have to deal with. This has completely changed my perspective of betting.",
   },
   {
     name: 'David Hoang',
     quote: "I have been with him the whole time I've been betting, everything just goes so smoothly, staking plan and everything. As long as you follow the advice nothing can go wrong. Cannot recommend the service enough, it even helped me quit monster to live longer.",
+  },
+  {
+    name: 'Adam Crane',
+    quote: "Sonny's service is top drawer. I have been a member for a while now and look forward to his tips and analysis daily. Thanks",
+  },
+  {
+    name: 'James Wallace',
+    quote: "Great service which is open, honest and clear. Can tell Sonny knows what he's doing and that there is a lot of profit to be made!",
   },
 ]
 
