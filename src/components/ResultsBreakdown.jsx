@@ -384,8 +384,8 @@ export default function ResultsBreakdown() {
               <Loader2 className="w-6 h-6 text-primary animate-spin" />
             </div>
           ) : (
-            <div className="overflow-x-auto pb-4 -mx-6 pl-6 pr-3 md:px-6 scrollbar-hide">
-              <div className="flex gap-4 md:gap-5">
+            <div className="overflow-x-auto overflow-y-visible pb-4 -mx-6 pl-6 pr-3 md:px-6 scrollbar-hide">
+              <div className="flex gap-4 md:gap-5 py-1">
                 {monthlyData.map((data, index) => (
                   <MonthCard key={data.month} {...data} delay={index * 100} />
                 ))}
