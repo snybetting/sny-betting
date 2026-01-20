@@ -62,12 +62,12 @@ function MonthCard({ month, profit, bets, roi, delay }) {
       className="relative overflow-hidden rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Animated gradient background */}
+      {/* Animated gradient background - matches hero */}
       <div
         className="absolute inset-0 z-0 animate-gradient-shift"
         style={{
-          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
-          backgroundSize: '200% 200%',
+          background: `linear-gradient(110deg, #333333 0%, #333333 25%, rgba(208, 240, 192, 0.08) 40%, rgba(208, 240, 192, 0.12) 50%, rgba(208, 240, 192, 0.08) 60%, #333333 75%, #333333 100%)`,
+          backgroundSize: '200% 100%',
         }}
       />
       <div className="relative z-10">
@@ -98,12 +98,12 @@ function SeasonCard({ season, data }) {
 
   return (
     <div className={`rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
-      {/* Animated gradient background */}
+      {/* Animated gradient background - matches hero */}
       <div
         className="absolute inset-0 z-0 animate-gradient-shift"
         style={{
-          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
-          backgroundSize: '200% 200%',
+          background: `linear-gradient(110deg, #333333 0%, #333333 25%, rgba(208, 240, 192, 0.08) 40%, rgba(208, 240, 192, 0.12) 50%, rgba(208, 240, 192, 0.08) 60%, #333333 75%, #333333 100%)`,
+          backgroundSize: '200% 100%',
         }}
       />
       {/* Current badge */}
@@ -143,12 +143,12 @@ function AllTimeCard({ data }) {
 
   return (
     <div className="rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
-      {/* Animated gradient background */}
+      {/* Animated gradient background - matches hero */}
       <div
         className="absolute inset-0 z-0 animate-gradient-shift"
         style={{
-          background: `linear-gradient(135deg, #3d3d3d 0%, #3d3d3d 30%, rgba(208, 240, 192, 0.08) 50%, #3d3d3d 70%, #3d3d3d 100%)`,
-          backgroundSize: '200% 200%',
+          background: `linear-gradient(110deg, #333333 0%, #333333 25%, rgba(208, 240, 192, 0.08) 40%, rgba(208, 240, 192, 0.12) 50%, rgba(208, 240, 192, 0.08) 60%, #333333 75%, #333333 100%)`,
+          backgroundSize: '200% 100%',
         }}
       />
       <div className="relative z-10">
