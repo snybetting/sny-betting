@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { label: 'Profit Calculator', href: '#calculator' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'Get Started', href: '#links' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact Me', href: 'https://t.me/snybetting', external: true },
 ]
 
 export default function Navbar() {
@@ -54,7 +54,9 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
+              onClick={link.external ? undefined : (e) => handleNavClick(e, link.href)}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
               className="nav-link"
             >
               {link.label}
@@ -87,7 +89,9 @@ export default function Navbar() {
           <a
             key={link.href}
             href={link.href}
-            onClick={(e) => handleNavClick(e, link.href)}
+            onClick={link.external ? () => setIsMobileMenuOpen(false) : (e) => handleNavClick(e, link.href)}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
             className="relative z-10 text-white text-2xl font-semibold py-4 px-8 rounded-xl hover:text-primary hover:bg-white/5 transition-all"
           >
             {link.label}
