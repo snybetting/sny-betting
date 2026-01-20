@@ -2,7 +2,34 @@ import { useState, useEffect, useRef } from 'react'
 import { Loader2, TrendingUp, ChevronDown } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
-// Cumulative profit data for the graph (starts at 0)
+// 2024/2025 Season cumulative profit data
+const SEASON_2425_DATA = [
+  { month: 'Start', profit: 0 },
+  { month: 'Aug 24', profit: 48.43 },
+  { month: 'Sep 24', profit: 90.37 },
+  { month: 'Oct 24', profit: 94.19 },
+  { month: 'Nov 24', profit: 108.05 },
+  { month: 'Dec 24', profit: 110.44 },
+  { month: 'Jan 25', profit: 109.53 },
+  { month: 'Feb 25', profit: 119.79 },
+  { month: 'Mar 25', profit: 133.47 },
+  { month: 'Apr 25', profit: 134.53 },
+  { month: 'May 25', profit: 152.66 },
+  { month: 'Jun 25', profit: 219.31 },
+  { month: 'Jul 25', profit: 233.73 },
+]
+
+// 2025/2026 Season cumulative profit data
+const SEASON_2526_DATA = [
+  { month: 'Start', profit: 0 },
+  { month: 'Aug 25', profit: 29.35 },
+  { month: 'Sep 25', profit: 38.51 },
+  { month: 'Oct 25', profit: 38.24 },
+  { month: 'Nov 25', profit: 71.14 },
+  { month: 'Dec 25', profit: 116.30 },
+]
+
+// All-time cumulative profit data for the graph (starts at 0)
 const CUMULATIVE_PROFIT_DATA = [
   { month: 'Start', profit: 0 },
   { month: 'Aug 24', profit: 48.43 },
@@ -104,10 +131,66 @@ function MonthCard({ month, profit, bets, roi, delay }) {
   )
 }
 
-function SeasonCard({ season, data }) {
+function SeasonGraph({ data, maxY, yInterval }) {
+  const ticks = []
+  for (let i = 0; i <= maxY; i += yInterval) {
+    ticks.push(i)
+  }
+
+  return (
+    <div className="mt-4 pt-4 border-t border-white/10">
+      <div className="h-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+            <defs>
+              <linearGradient id="seasonProfitGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D0F0C0" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#D0F0C0" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9 }}
+              interval={0}
+              angle={-45}
+              textAnchor="end"
+              height={50}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }}
+              domain={[0, maxY]}
+              ticks={ticks}
+              tickFormatter={(value) => `${value}`}
+              width={35}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Area
+              type="linear"
+              dataKey="profit"
+              stroke="#D0F0C0"
+              strokeWidth={2}
+              fill="url(#seasonProfitGradient)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+}
+
+function SeasonCard({ season, data, showGraph, onToggleGraph }) {
   const isPositive = data.profit >= 0
   const isCurrent = data.status === 'current'
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
+
+  // Get season-specific graph data
+  const graphData = season === '2024/2025' ? SEASON_2425_DATA : SEASON_2526_DATA
+  const maxY = season === '2024/2025' ? 260 : 140
+  const yInterval = 20
 
   return (
     <div className={`bg-[#404040] rounded-2xl p-6 md:p-8 flex-1 relative shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
@@ -136,6 +219,19 @@ function SeasonCard({ season, data }) {
         <span className="text-white/40">•</span>
         <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
       </div>
+
+      {/* View Season Graph button */}
+      <button
+        onClick={onToggleGraph}
+        className="mt-4 flex items-center gap-2 text-sm text-white/70 hover:text-primary transition-colors"
+      >
+        <TrendingUp className="w-4 h-4" />
+        <span>{showGraph ? 'Hide Graph' : 'View Season Graph'}</span>
+        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${showGraph ? 'rotate-180' : ''}`} />
+      </button>
+
+      {/* Expandable Season Graph */}
+      {showGraph && <SeasonGraph data={graphData} maxY={maxY} yInterval={yInterval} />}
     </div>
   )
 }
@@ -302,10 +398,15 @@ export default function ResultsBreakdown() {
   const [isVisible, setIsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [showGraph, setShowGraph] = useState(false)
+  const [showSeasonGraph, setShowSeasonGraph] = useState({})
   const [monthlyData, setMonthlyData] = useState(FALLBACK_MONTHLY)
   const [seasonData, setSeasonData] = useState(FALLBACK_SEASONS)
   const [allTimeData, setAllTimeData] = useState(FALLBACK_ALLTIME)
   const sectionRef = useRef(null)
+
+  const toggleSeasonGraph = (season) => {
+    setShowSeasonGraph(prev => ({ ...prev, [season]: !prev[season] }))
+  }
 
   // Fetch data from Google Sheets
   useEffect(() => {
@@ -425,7 +526,13 @@ export default function ResultsBreakdown() {
               {/* Season cards - two columns */}
               <div className="grid md:grid-cols-2 gap-4">
                 {Object.entries(seasonData).map(([season, data]) => (
-                  <SeasonCard key={season} season={season} data={data} />
+                  <SeasonCard
+                    key={season}
+                    season={season}
+                    data={data}
+                    showGraph={showSeasonGraph[season] || false}
+                    onToggleGraph={() => toggleSeasonGraph(season)}
+                  />
                 ))}
               </div>
             </div>
