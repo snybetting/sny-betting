@@ -208,6 +208,8 @@ function ProfitGraph() {
               axisLine={false}
               tickLine={false}
               tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+              domain={[0, 400]}
+              ticks={[0, 50, 100, 150, 200, 250, 300, 350, 400]}
               tickFormatter={(value) => `${value}`}
             />
             <Tooltip content={<CustomTooltip />} />
