@@ -59,7 +59,7 @@ function MonthCard({ month, profit, bets, roi, delay }) {
 
   return (
     <div
-      className="bg-[#2d2d2d] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="bg-[#3d3d3d] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Month label - small, lighter */}
@@ -87,7 +87,7 @@ function SeasonCard({ season, data }) {
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
-    <div className={`bg-[#2d2d2d] rounded-2xl p-6 md:p-8 flex-1 relative shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
+    <div className={`bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
       {/* Current badge */}
       {isCurrent && (
         <div className="absolute top-4 right-4">
@@ -122,7 +122,7 @@ function AllTimeCard({ data }) {
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
-    <div className="bg-[#2d2d2d] rounded-2xl p-6 md:p-8 flex-1 shadow-lg">
+    <div className="bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 shadow-lg">
       {/* Title - small, lighter */}
       <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
       <div className="text-2xl md:text-3xl text-white font-bold mb-5">All Time</div>
