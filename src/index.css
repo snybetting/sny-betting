@@ -334,15 +334,12 @@ button:focus-visible {
   background: conic-gradient(
     from 0deg,
     rgba(208, 240, 192, 0.15) 0deg,
-    rgba(208, 240, 192, 0.55) 60deg,
-    rgba(208, 240, 192, 0.15) 120deg,
-    rgba(208, 240, 192, 0.55) 180deg,
-    rgba(208, 240, 192, 0.15) 240deg,
-    rgba(208, 240, 192, 0.55) 300deg,
+    rgba(208, 240, 192, 0.6) 45deg,
+    rgba(208, 240, 192, 0.15) 90deg,
     rgba(208, 240, 192, 0.15) 360deg
   );
-  animation: logo-glow-rotate 8s linear infinite;
-  filter: blur(2px);
+  animation: logo-glow-rotate 4s linear infinite;
+  filter: blur(3px);
 }
 
 @keyframes logo-glow-rotate {
