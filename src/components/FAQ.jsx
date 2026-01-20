@@ -29,7 +29,29 @@ const FAQ_DATA = [
   },
   {
     question: 'Is this free?',
-    answer: "Yes! I offer a free service with daily bets. There's also a VIP tier for serious bettors who want access to every bet I place.",
+    answer: (
+      <>
+        Yes! I offer a{' '}
+        <a
+          href="https://t.me/+KRBoF_MnFuhhZDVk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline hover:text-primary/80 transition-colors"
+        >
+          free service
+        </a>{' '}
+        with daily bets. There's also a{' '}
+        <a
+          href="https://t.me/+67pZuXXVM6pmZmRk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline hover:text-primary/80 transition-colors"
+        >
+          VIP tier
+        </a>{' '}
+        for serious bettors who want access to every bet I place.
+      </>
+    ),
   },
   {
     question: 'How much can I make?',
