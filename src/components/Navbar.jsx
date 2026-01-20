@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 
 const NAV_LINKS = [
   { label: 'Results', href: '#results' },
-  { label: 'Calculator', href: '#calculator' },
+  { label: 'Profit Calculator', href: '#calculator' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'Links', href: '#links' },
 ]
