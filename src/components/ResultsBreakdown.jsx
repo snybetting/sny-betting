@@ -1,5 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
-import { Loader2 } from 'lucide-react'
+import { Loader2, TrendingUp, ChevronDown } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
+
+// Cumulative profit data for the graph
+const CUMULATIVE_PROFIT_DATA = [
+  { month: 'Aug 24', profit: 48.43 },
+  { month: 'Sep 24', profit: 90.37 },
+  { month: 'Oct 24', profit: 94.19 },
+  { month: 'Nov 24', profit: 108.05 },
+  { month: 'Dec 24', profit: 110.44 },
+  { month: 'Jan 25', profit: 109.53 },
+  { month: 'Feb 25', profit: 119.79 },
+  { month: 'Mar 25', profit: 133.47 },
+  { month: 'Apr 25', profit: 134.53 },
+  { month: 'May 25', profit: 152.66 },
+  { month: 'Jun 25', profit: 219.31 },
+  { month: 'Jul 25', profit: 233.73 },
+  { month: 'Aug 25', profit: 263.08 },
+  { month: 'Sep 25', profit: 272.24 },
+  { month: 'Oct 25', profit: 271.97 },
+  { month: 'Nov 25', profit: 304.87 },
+  { month: 'Dec 25', profit: 350.03 },
+]
 
 // Google Sheets CSV URL (same as calculator)
 const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U7-XEQwXg2kRotwkID8Sa-jW85Tmc2hWRWVpOhHfqwd5kJlmpeDT_i_HNZPlDAMngNUvhEA/pub?gid=869956905&single=true&output=csv'
@@ -143,6 +165,66 @@ function AllTimeCard({ data }) {
   )
 }
 
+// Custom tooltip for the chart
+function CustomTooltip({ active, payload, label }) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-[#333333] border border-white/20 rounded-lg px-4 py-3 shadow-xl">
+        <p className="text-white/70 text-sm mb-1">{label}</p>
+        <p className="text-primary font-bold text-lg">+{payload[0].value.toFixed(2)} units</p>
+      </div>
+    )
+  }
+  return null
+}
+
+function ProfitGraph() {
+  return (
+    <div className="bg-[#404040] rounded-2xl p-6 shadow-lg">
+      <div className="flex items-center gap-2 mb-6">
+        <TrendingUp className="w-5 h-5 text-primary" />
+        <h3 className="text-white font-bold text-lg">Cumulative Profit</h3>
+      </div>
+      <div className="h-[300px] md:h-[350px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={CUMULATIVE_PROFIT_DATA} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+            <defs>
+              <linearGradient id="profitGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D0F0C0" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#D0F0C0" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+              interval={2}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+              tickFormatter={(value) => `${value}`}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Area
+              type="monotone"
+              dataKey="profit"
+              stroke="#D0F0C0"
+              strokeWidth={3}
+              fill="url(#profitGradient)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="text-white/50 text-xs text-center mt-4">
+        Cumulative units profit from August 2024 to December 2025
+      </p>
+    </div>
+  )
+}
+
 // Parse CSV for results data
 function parseResultsCSV(csvText) {
   const rows = csvText.split('\n').map(row => {
@@ -213,6 +295,7 @@ function parseResultsCSV(csvText) {
 export default function ResultsBreakdown() {
   const [isVisible, setIsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [showGraph, setShowGraph] = useState(false)
   const [monthlyData, setMonthlyData] = useState(FALLBACK_MONTHLY)
   const [seasonData, setSeasonData] = useState(FALLBACK_SEASONS)
   const [allTimeData, setAllTimeData] = useState(FALLBACK_ALLTIME)
@@ -314,6 +397,23 @@ export default function ResultsBreakdown() {
               {/* All Time card - centered on top */}
               <div className="max-w-md mx-auto">
                 <AllTimeCard data={allTimeData} />
+              </div>
+
+              {/* View Profit Graph button */}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setShowGraph(!showGraph)}
+                  className="flex items-center gap-2 px-5 py-3 bg-[#404040] hover:bg-[#4a4a4a] text-white rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <TrendingUp className="w-5 h-5 text-primary" />
+                  <span className="font-medium">{showGraph ? 'Hide Profit Graph' : 'View Profit Graph'}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showGraph ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+
+              {/* Expandable Profit Graph */}
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${showGraph ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <ProfitGraph />
               </div>
 
               {/* Season cards - two columns */}
