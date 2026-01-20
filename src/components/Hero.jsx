@@ -98,7 +98,7 @@ export default function Hero() {
             className="btn-primary w-full sm:w-auto justify-center"
           >
             <Send className="w-5 h-5" />
-            Get free daily bets
+            Get free bets daily
           </a>
 
           <a

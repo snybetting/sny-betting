@@ -17,7 +17,7 @@ const TelegramIcon = () => (
 
 const LINKS = [
   {
-    title: 'Get free daily bets',
+    title: 'Get free bets daily',
     href: 'https://t.me/+KRBoF_MnFuhhZDVk',
     icon: TelegramIcon,
   },
