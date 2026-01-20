@@ -97,21 +97,21 @@ function SeasonCard({ season, data }) {
         </div>
       )}
 
-      {/* Season label - small, muted */}
-      <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Season</div>
+      {/* Season label - small, lighter */}
+      <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Season</div>
       <div className="text-2xl md:text-3xl text-white font-bold mb-5">{season}</div>
 
       {/* Profit - hero stat */}
       <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
         {isPositive ? '+' : ''}{data.profit.toFixed(2)}
-        <span className="text-xl font-semibold ml-1">units</span>
+        <span className="text-xl font-semibold ml-1">units profit</span>
       </div>
 
-      {/* Secondary stats - ROI and bets, muted */}
-      <div className="flex items-center gap-4 text-white/50 text-sm">
-        <span>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
-        <span className="text-white/30">•</span>
-        <span>{data.totalBets.toLocaleString()} bets</span>
+      {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
+      <div className="flex items-center gap-3">
+        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+        <span className="text-white/40">•</span>
+        <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
       </div>
     </div>
   )
@@ -123,21 +123,21 @@ function AllTimeCard({ data }) {
 
   return (
     <div className="bg-[#3d3d3d] rounded-2xl p-6 md:p-8 flex-1 relative overflow-hidden shadow-lg">
-      {/* Title - small, muted */}
-      <div className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
+      {/* Title - small, lighter */}
+      <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-1">Since August 2024</div>
       <div className="text-2xl md:text-3xl text-white font-bold mb-5">All Time</div>
 
       {/* Profit - hero stat */}
       <div className={`text-4xl md:text-5xl font-bold mb-4 ${profitColor}`}>
         {isPositive ? '+' : ''}{data.profit.toFixed(2)}
-        <span className="text-xl font-semibold ml-1">units</span>
+        <span className="text-xl font-semibold ml-1">units profit</span>
       </div>
 
-      {/* Secondary stats - ROI and bets, muted */}
-      <div className="flex items-center gap-4 text-white/50 text-sm">
-        <span>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
-        <span className="text-white/30">•</span>
-        <span>{data.totalBets.toLocaleString()} bets</span>
+      {/* Secondary stats - ROI (colored, larger) • Bets (white, smaller) */}
+      <div className="flex items-center gap-3">
+        <span className={`text-base font-semibold ${profitColor}`}>{isPositive ? '+' : ''}{data.roi.toFixed(2)}% ROI</span>
+        <span className="text-white/40">•</span>
+        <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
       </div>
     </div>
   )
