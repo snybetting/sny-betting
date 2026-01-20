@@ -322,31 +322,47 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Animated border flow effect */
-.bg-gradient-conic {
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 60deg,
-    #D0F0C0 120deg,
-    #a8e6a3 180deg,
-    #D0F0C0 240deg,
-    transparent 300deg,
-    transparent 360deg
-  );
+/* Animated border snake effect */
+.animated-border-btn {
+  position: relative;
+  overflow: visible;
 }
 
-@keyframes border-flow {
+.animated-border-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 0%,
+    transparent 70%,
+    #7ddf64 85%,
+    #D0F0C0 90%,
+    #7ddf64 95%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-snake 2.5s linear infinite;
+}
+
+@keyframes border-snake {
   0% {
-    transform: rotate(0deg);
+    --border-angle: 0deg;
   }
   100% {
-    transform: rotate(360deg);
+    --border-angle: 360deg;
   }
 }
 
-.animate-border-flow {
-  animation: border-flow 3s linear infinite;
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 /* Link hover effect */
