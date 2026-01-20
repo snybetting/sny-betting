@@ -153,7 +153,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="reviews"
-      className="section-light py-20 md:py-28 px-6 overflow-hidden"
+      className="section-light py-12 md:py-16 px-6 overflow-hidden"
     >
       <div className={`max-w-6xl mx-auto ${isVisible ? 'section-visible' : 'section-hidden'}`}>
         {/* Section header */}
