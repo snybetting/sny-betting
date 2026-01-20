@@ -1,33 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { Loader2, TrendingUp, ChevronDown } from 'lucide-react'
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
-
-// 2024/2025 Season cumulative profit data
-const SEASON_2425_DATA = [
-  { month: 'Start', profit: 0 },
-  { month: 'Aug 24', profit: 48.43 },
-  { month: 'Sep 24', profit: 90.37 },
-  { month: 'Oct 24', profit: 94.19 },
-  { month: 'Nov 24', profit: 108.05 },
-  { month: 'Dec 24', profit: 110.44 },
-  { month: 'Jan 25', profit: 109.53 },
-  { month: 'Feb 25', profit: 119.79 },
-  { month: 'Mar 25', profit: 133.47 },
-  { month: 'Apr 25', profit: 134.53 },
-  { month: 'May 25', profit: 152.66 },
-  { month: 'Jun 25', profit: 219.31 },
-  { month: 'Jul 25', profit: 233.73 },
-]
-
-// 2025/2026 Season cumulative profit data
-const SEASON_2526_DATA = [
-  { month: 'Start', profit: 0 },
-  { month: 'Aug 25', profit: 29.35 },
-  { month: 'Sep 25', profit: 38.51 },
-  { month: 'Oct 25', profit: 38.24 },
-  { month: 'Nov 25', profit: 71.14 },
-  { month: 'Dec 25', profit: 116.30 },
-]
+import { Loader2 } from 'lucide-react'
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
 // All-time cumulative profit data for the graph (starts at 0)
 const CUMULATIVE_PROFIT_DATA = [
@@ -131,9 +104,9 @@ function MonthCard({ month, profit, bets, roi, delay }) {
   )
 }
 
-function SeasonGraph({ data, maxY, yInterval }) {
+function EmbeddedGraph({ data, maxY, gradientId }) {
   const ticks = []
-  for (let i = 0; i <= maxY; i += yInterval) {
+  for (let i = 0; i <= maxY; i += 20) {
     ticks.push(i)
   }
 
@@ -143,7 +116,7 @@ function SeasonGraph({ data, maxY, yInterval }) {
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
             <defs>
-              <linearGradient id="seasonProfitGradient" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#D0F0C0" stopOpacity={0.3} />
                 <stop offset="95%" stopColor="#D0F0C0" stopOpacity={0} />
               </linearGradient>
@@ -173,7 +146,8 @@ function SeasonGraph({ data, maxY, yInterval }) {
               dataKey="profit"
               stroke="#D0F0C0"
               strokeWidth={2}
-              fill="url(#seasonProfitGradient)"
+              fill={`url(#${gradientId})`}
+              dot={{ fill: '#D0F0C0', strokeWidth: 0, r: 3 }}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -182,15 +156,10 @@ function SeasonGraph({ data, maxY, yInterval }) {
   )
 }
 
-function SeasonCard({ season, data, showGraph, onToggleGraph }) {
+function SeasonCard({ season, data }) {
   const isPositive = data.profit >= 0
   const isCurrent = data.status === 'current'
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
-
-  // Get season-specific graph data
-  const graphData = season === '2024/2025' ? SEASON_2425_DATA : SEASON_2526_DATA
-  const maxY = season === '2024/2025' ? 260 : 140
-  const yInterval = 20
 
   return (
     <div className={`bg-[#404040] rounded-2xl p-6 md:p-8 flex-1 relative shadow-lg ${isCurrent ? 'border border-primary/30' : ''}`}>
@@ -219,19 +188,6 @@ function SeasonCard({ season, data, showGraph, onToggleGraph }) {
         <span className="text-white/40">•</span>
         <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
       </div>
-
-      {/* View Season Graph button */}
-      <button
-        onClick={onToggleGraph}
-        className="mt-4 flex items-center gap-2 text-sm text-white/70 hover:text-primary transition-colors"
-      >
-        <TrendingUp className="w-4 h-4" />
-        <span>{showGraph ? 'Hide Graph' : 'View Season Graph'}</span>
-        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${showGraph ? 'rotate-180' : ''}`} />
-      </button>
-
-      {/* Expandable Season Graph */}
-      {showGraph && <SeasonGraph data={graphData} maxY={maxY} yInterval={yInterval} />}
     </div>
   )
 }
@@ -258,6 +214,9 @@ function AllTimeCard({ data }) {
         <span className="text-white/40">•</span>
         <span className="text-white/80 text-sm">{data.totalBets.toLocaleString()} bets</span>
       </div>
+
+      {/* All Time Graph - always visible */}
+      <EmbeddedGraph data={CUMULATIVE_PROFIT_DATA} maxY={360} gradientId="allTimeGradient" />
     </div>
   )
 }
@@ -273,58 +232,6 @@ function CustomTooltip({ active, payload, label }) {
     )
   }
   return null
-}
-
-function ProfitGraph() {
-  return (
-    <div className="bg-[#404040] rounded-2xl p-6 shadow-lg">
-      <div className="flex items-center gap-2 mb-6">
-        <TrendingUp className="w-5 h-5 text-primary" />
-        <h3 className="text-white font-bold text-lg">Cumulative Profit</h3>
-      </div>
-      <div className="h-[300px] md:h-[350px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={CUMULATIVE_PROFIT_DATA} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-            <defs>
-              <linearGradient id="profitGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#D0F0C0" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#D0F0C0" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis
-              dataKey="month"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }}
-              interval={0}
-              angle={-45}
-              textAnchor="end"
-              height={60}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
-              domain={[0, 400]}
-              ticks={[0, 50, 100, 150, 200, 250, 300, 350, 400]}
-              tickFormatter={(value) => `${value}`}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="linear"
-              dataKey="profit"
-              stroke="#D0F0C0"
-              strokeWidth={3}
-              fill="url(#profitGradient)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-      <p className="text-white/50 text-xs text-center mt-4">
-        Cumulative units profit from August 2024 to December 2025
-      </p>
-    </div>
-  )
 }
 
 // Parse CSV for results data
@@ -397,16 +304,10 @@ function parseResultsCSV(csvText) {
 export default function ResultsBreakdown() {
   const [isVisible, setIsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [showGraph, setShowGraph] = useState(false)
-  const [showSeasonGraph, setShowSeasonGraph] = useState({})
   const [monthlyData, setMonthlyData] = useState(FALLBACK_MONTHLY)
   const [seasonData, setSeasonData] = useState(FALLBACK_SEASONS)
   const [allTimeData, setAllTimeData] = useState(FALLBACK_ALLTIME)
   const sectionRef = useRef(null)
-
-  const toggleSeasonGraph = (season) => {
-    setShowSeasonGraph(prev => ({ ...prev, [season]: !prev[season] }))
-  }
 
   // Fetch data from Google Sheets
   useEffect(() => {
@@ -501,26 +402,9 @@ export default function ResultsBreakdown() {
             </div>
           ) : (
             <div className="space-y-4">
-              {/* All Time card - centered on top */}
-              <div className="max-w-md mx-auto">
+              {/* All Time card - centered on top with embedded graph */}
+              <div className="max-w-2xl mx-auto">
                 <AllTimeCard data={allTimeData} />
-              </div>
-
-              {/* View Profit Graph button */}
-              <div className="flex justify-center">
-                <button
-                  onClick={() => setShowGraph(!showGraph)}
-                  className="flex items-center gap-2 px-5 py-3 bg-[#404040] hover:bg-[#4a4a4a] text-white rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  <TrendingUp className="w-5 h-5 text-primary" />
-                  <span className="font-medium">{showGraph ? 'Hide Profit Graph' : 'View Profit Graph'}</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showGraph ? 'rotate-180' : ''}`} />
-                </button>
-              </div>
-
-              {/* Expandable Profit Graph */}
-              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${showGraph ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                <ProfitGraph />
               </div>
 
               {/* Season cards - two columns */}
@@ -530,8 +414,6 @@ export default function ResultsBreakdown() {
                     key={season}
                     season={season}
                     data={data}
-                    showGraph={showSeasonGraph[season] || false}
-                    onToggleGraph={() => toggleSeasonGraph(season)}
                   />
                 ))}
               </div>
