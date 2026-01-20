@@ -322,39 +322,6 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Animated snake border effect */
-.snake-border-wrapper {
-  position: relative;
-  overflow: hidden;
-  background: #444;
-}
-
-.snake-border-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  height: 200%;
-  transform: translate(-50%, -50%);
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 340deg,
-    #5a5a5a 350deg,
-    #D0F0C0 355deg,
-    #8fdb6a 360deg
-  );
-  animation: snake-rotate 2.5s linear infinite;
-}
-
-@keyframes snake-rotate {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
 
 /* Link hover effect */
 .link-hover {
