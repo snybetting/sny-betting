@@ -65,10 +65,6 @@ const FAQ_DATA = [
     question: 'Which bookies do you use?',
     answer: 'Bet365, Sky Bet, Paddy Power, and Betfair.',
   },
-  {
-    question: "What if I miss a bet?",
-    answer: "Don't worry - you can't catch them all. This is a long-term approach, so missing the odd bet won't hurt your overall results.",
-  },
 ]
 
 function AccordionItem({ question, answer, isOpen, onClick }) {
