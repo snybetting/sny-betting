@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { Loader2, TrendingUp, ChevronDown } from 'lucide-react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
-// Cumulative profit data for the graph
+// Cumulative profit data for the graph (starts at 0)
 const CUMULATIVE_PROFIT_DATA = [
+  { month: 'Start', profit: 0 },
   { month: 'Aug 24', profit: 48.43 },
   { month: 'Sep 24', profit: 90.37 },
   { month: 'Oct 24', profit: 94.19 },
