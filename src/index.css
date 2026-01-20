@@ -322,27 +322,20 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Premium logo glow effect */
-.logo-glow-wrapper {
+/* Rotating logo border */
+.logo-border-wrapper {
   position: relative;
-}
-
-.logo-glow-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 9999px;
   background: conic-gradient(
     from 0deg,
-    rgba(208, 240, 192, 0.15) 0deg,
-    rgba(208, 240, 192, 0.6) 45deg,
-    rgba(208, 240, 192, 0.15) 90deg,
-    rgba(208, 240, 192, 0.15) 360deg
+    transparent 0deg,
+    transparent 330deg,
+    #D0F0C0 345deg,
+    #8fdb6a 360deg
   );
-  animation: logo-glow-rotate 4s linear infinite;
-  filter: blur(3px);
+  animation: logo-border-rotate 3s linear infinite;
 }
 
-@keyframes logo-glow-rotate {
+@keyframes logo-border-rotate {
   0% {
     transform: rotate(0deg);
   }
