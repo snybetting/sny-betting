@@ -212,7 +212,7 @@ function ProfitGraph() {
             />
             <Tooltip content={<CustomTooltip />} />
             <Area
-              type="monotone"
+              type="linear"
               dataKey="profit"
               stroke="#D0F0C0"
               strokeWidth={3}
