@@ -2,12 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // EDIT TESTIMONIALS HERE - Add new testimonials to this array
-// Ordered by impact: specific results first, then detailed endorsements
+// Ordered by impact: detailed endorsements first
 const TESTIMONIALS = [
-  {
-    name: 'Jason',
-    quote: "Initially joined on a 3 day free trial which went great with just short of £200 profit in that time. I had no hesitation in signing up monthly and I'm now £250 in profit in just 1 week. The amount of detail with the guides and information given is excellent. Would highly recommend.",
-  },
   {
     name: 'Thomas',
     quote: "SNY has completely transformed the way I gamble. He's fully transparent with his P&L and does the hard work of consistently identifying genuine value bets. As long as you follow the advised bets and staking plan, the edge is clear. Not every bet wins, but that's just variance — long-term profitability is the goal, and the process delivers.",
