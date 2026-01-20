@@ -198,8 +198,11 @@ function ProfitGraph() {
               dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
-              interval={2}
+              tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }}
+              interval={0}
+              angle={-45}
+              textAnchor="end"
+              height={60}
             />
             <YAxis
               axisLine={false}
