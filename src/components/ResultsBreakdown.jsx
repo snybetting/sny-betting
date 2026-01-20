@@ -104,9 +104,9 @@ function MonthCard({ month, profit, bets, roi, delay }) {
   )
 }
 
-function EmbeddedGraph({ data, maxY, gradientId }) {
+function EmbeddedGraph({ data, maxY, interval = 20, gradientId }) {
   const ticks = []
-  for (let i = 0; i <= maxY; i += 20) {
+  for (let i = 0; i <= maxY; i += interval) {
     ticks.push(i)
   }
 
@@ -216,7 +216,7 @@ function AllTimeCard({ data }) {
       </div>
 
       {/* All Time Graph - always visible */}
-      <EmbeddedGraph data={CUMULATIVE_PROFIT_DATA} maxY={360} gradientId="allTimeGradient" />
+      <EmbeddedGraph data={CUMULATIVE_PROFIT_DATA} maxY={450} interval={75} gradientId="allTimeGradient" />
     </div>
   )
 }
