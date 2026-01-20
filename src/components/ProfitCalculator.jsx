@@ -186,11 +186,11 @@ export default function ProfitCalculator() {
         </div>
 
         {/* Calculator container */}
-        <div className="bg-white rounded-2xl p-5 md:p-7 shadow-soft-lg">
-          {/* Controls row */}
-          <div className="flex flex-col md:flex-row gap-4 md:items-end md:justify-between mb-6">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-soft-lg">
+          {/* Controls row - equal width columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Unit input */}
-            <div className="flex-1 max-w-xs">
+            <div>
               <label className="block text-dark/60 text-xs font-medium mb-2 uppercase tracking-wide">
                 Your £ per unit
               </label>
@@ -208,7 +208,7 @@ export default function ProfitCalculator() {
             </div>
 
             {/* Month selector */}
-            <div className="flex-1 max-w-xs">
+            <div>
               <label className="block text-dark/60 text-xs font-medium mb-2 uppercase tracking-wide">
                 Results from
               </label>
@@ -235,8 +235,8 @@ export default function ProfitCalculator() {
               <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
           ) : (
-            /* Results grid */
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            /* Results grid - equal width columns */
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <StatCard
                 icon={TrendingUp}
                 label="Total Profit"
@@ -274,7 +274,7 @@ export default function ProfitCalculator() {
           )}
 
           {/* Disclaimer */}
-          <p className="text-dark/40 text-xs text-center mt-5">
+          <p className="text-dark/40 text-xs text-center mt-6">
             Based on verified historical results. Past performance does not guarantee future results.
           </p>
         </div>
