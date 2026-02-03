@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'lucide-react'
 
-// All Time data (excluding incomplete January 2026)
+// All Time data (including January 2026)
 const ALL_TIME_DATA = {
-  totalBets: 2969,
-  profitUnits: 350.03,
-  roi: 11.86,
-  totalStaked: 2950.00,
+  totalBets: 3166,
+  profitUnits: 336.51,
+  roi: 10.63,
+  totalStaked: 3166.80,
 }
 
 // Monthly data hardcoded from spreadsheet (oldest to newest)
 // 24/25 Season: 1,967 bets, 233.73 profit, 1,836.75 staked, 12.73% ROI
-// 25/26 Season (Aug-Dec): 1,002 bets, 116.30 profit, 1,113.25 staked, 10.45% ROI
+// 25/26 Season (Aug-Jan): 1,199 bets, 102.78 profit, 1,330.05 staked, 7.73% ROI
 const MONTHLY_DATA = [
   // 24/25 Season
   { month: 'August 2024', bets: 427, profit: 48.43, staked: 347.95 },
@@ -32,10 +32,11 @@ const MONTHLY_DATA = [
   { month: 'October 2025', bets: 156, profit: -0.27, staked: 168.45 },
   { month: 'November 2025', bets: 227, profit: 32.90, staked: 260.45 },
   { month: 'December 2025', bets: 172, profit: 45.16, staked: 218.20 },
+  { month: 'January 2026', bets: 197, profit: -13.52, staked: 216.80 },
 ]
 
-// Generate month options from Aug 2024 to current
-const MONTH_OPTIONS = MONTHLY_DATA.map(m => m.month)
+// Generate month options from Aug 2024 to current (newest first in dropdown)
+const MONTH_OPTIONS = [...MONTHLY_DATA].reverse().map(m => m.month)
 
 // Animated number component
 function AnimatedNumber({ value, prefix = '', suffix = '', decimals = 0, duration = 1200 }) {
