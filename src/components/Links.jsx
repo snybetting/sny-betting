@@ -23,7 +23,7 @@ const LINKS = [
   },
   {
     title: 'Copy every bet I place',
-    href: 'https://t.me/+67pZuXXVM6pmZmRk',
+    href: 'https://t.me/snybettingbot?start=-plans',
     icon: Users,
   },
   {

@@ -101,7 +101,7 @@ export default function Hero() {
           </a>
 
           <a
-            href="https://t.me/+67pZuXXVM6pmZmRk"
+            href="https://t.me/snybettingbot?start=-plans"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary w-full sm:w-auto justify-center"

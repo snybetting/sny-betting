@@ -42,7 +42,7 @@ const FAQ_DATA = [
         </a>{' '}
         with daily bets. There's also a{' '}
         <a
-          href="https://t.me/+67pZuXXVM6pmZmRk"
+          href="https://t.me/snybettingbot?start=-plans"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary underline hover:text-primary/80 transition-colors"
