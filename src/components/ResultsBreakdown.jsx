@@ -5,24 +5,24 @@ import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'rec
 // All-time cumulative profit data for the graph (starts at 0)
 const CUMULATIVE_PROFIT_DATA = [
   { month: 'Start', profit: 0 },
-  { month: 'Aug 24', profit: 48.43 },
-  { month: 'Sep 24', profit: 90.37 },
-  { month: 'Oct 24', profit: 94.19 },
-  { month: 'Nov 24', profit: 108.05 },
-  { month: 'Dec 24', profit: 110.44 },
-  { month: 'Jan 25', profit: 109.53 },
-  { month: 'Feb 25', profit: 119.79 },
-  { month: 'Mar 25', profit: 133.47 },
-  { month: 'Apr 25', profit: 134.53 },
-  { month: 'May 25', profit: 152.66 },
-  { month: 'Jun 25', profit: 219.31 },
-  { month: 'Jul 25', profit: 233.73 },
-  { month: 'Aug 25', profit: 263.08 },
-  { month: 'Sep 25', profit: 272.24 },
-  { month: 'Oct 25', profit: 271.97 },
-  { month: 'Nov 25', profit: 304.87 },
-  { month: 'Dec 25', profit: 350.03 },
-  { month: 'Jan 26', profit: 336.51 },
+  { month: 'Aug 24', profit: 48.51 },
+  { month: 'Sep 24', profit: 92.05 },
+  { month: 'Oct 24', profit: 100.58 },
+  { month: 'Nov 24', profit: 114.46 },
+  { month: 'Dec 24', profit: 116.85 },
+  { month: 'Jan 25', profit: 115.95 },
+  { month: 'Feb 25', profit: 126.27 },
+  { month: 'Mar 25', profit: 139.99 },
+  { month: 'Apr 25', profit: 148.05 },
+  { month: 'May 25', profit: 166.22 },
+  { month: 'Jun 25', profit: 232.96 },
+  { month: 'Jul 25', profit: 247.38 },
+  { month: 'Aug 25', profit: 276.73 },
+  { month: 'Sep 25', profit: 285.89 },
+  { month: 'Oct 25', profit: 285.62 },
+  { month: 'Nov 25', profit: 318.52 },
+  { month: 'Dec 25', profit: 363.68 },
+  { month: 'Jan 26', profit: 350.16 },
 ]
 
 // Google Sheets CSV URL (same as calculator)
@@ -31,48 +31,48 @@ const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U
 // Monthly data (most recent first) - August 2024 to January 2026
 const FALLBACK_MONTHLY = [
   // 25/26 Season
-  { month: 'January 2026', profit: -13.52, bets: 197, roi: -6.24 },
-  { month: 'December 2025', profit: 45.16, bets: 172, roi: 20.70 },
-  { month: 'November 2025', profit: 32.90, bets: 227, roi: 12.63 },
-  { month: 'October 2025', profit: -0.27, bets: 156, roi: -0.16 },
-  { month: 'September 2025', profit: 9.16, bets: 205, roi: 4.27 },
-  { month: 'August 2025', profit: 29.35, bets: 242, roi: 11.66 },
+  { month: 'January 2026', profit: -13.52, bets: 197, roi: -6.2 },
+  { month: 'December 2025', profit: 45.16, bets: 172, roi: 20.7 },
+  { month: 'November 2025', profit: 32.90, bets: 227, roi: 12.6 },
+  { month: 'October 2025', profit: -0.27, bets: 155, roi: -0.2 },
+  { month: 'September 2025', profit: 9.16, bets: 204, roi: 4.3 },
+  { month: 'August 2025', profit: 29.35, bets: 241, roi: 11.7 },
   // 24/25 Season
-  { month: 'July 2025', profit: 14.42, bets: 124, roi: 11.62 },
-  { month: 'June 2025', profit: 66.65, bets: 160, roi: 44.64 },
-  { month: 'May 2025', profit: 18.13, bets: 150, roi: 12.23 },
-  { month: 'April 2025', profit: 1.06, bets: 118, roi: 0.85 },
-  { month: 'March 2025', profit: 13.68, bets: 84, roi: 15.82 },
-  { month: 'February 2025', profit: 10.26, bets: 94, roi: 10.38 },
-  { month: 'January 2025', profit: -0.91, bets: 146, roi: -0.67 },
-  { month: 'December 2024', profit: 2.39, bets: 59, roi: 4.07 },
-  { month: 'November 2024', profit: 13.86, bets: 124, roi: 11.26 },
-  { month: 'October 2024', profit: 3.82, bets: 243, roi: 1.69 },
-  { month: 'September 2024', profit: 41.94, bets: 238, roi: 19.61 },
-  { month: 'August 2024', profit: 48.43, bets: 427, roi: 13.92 },
+  { month: 'July 2025', profit: 14.42, bets: 123, roi: 11.6 },
+  { month: 'June 2025', profit: 66.74, bets: 159, roi: 44.7 },
+  { month: 'May 2025', profit: 18.17, bets: 149, roi: 12.3 },
+  { month: 'April 2025', profit: 8.06, bets: 117, roi: 6.5 },
+  { month: 'March 2025', profit: 13.72, bets: 83, roi: 15.9 },
+  { month: 'February 2025', profit: 10.32, bets: 93, roi: 10.4 },
+  { month: 'January 2025', profit: -0.90, bets: 145, roi: -0.7 },
+  { month: 'December 2024', profit: 2.39, bets: 58, roi: 4.1 },
+  { month: 'November 2024', profit: 13.88, bets: 123, roi: 11.3 },
+  { month: 'October 2024', profit: 8.53, bets: 235, roi: 3.9 },
+  { month: 'September 2024', profit: 43.54, bets: 234, roi: 20.5 },
+  { month: 'August 2024', profit: 48.51, bets: 427, roi: 13.9 },
 ]
 
 // Season data (including January 2026)
 const FALLBACK_SEASONS = {
   '2025/2026': {
-    totalBets: 1199,
+    totalBets: 1196,
     profit: 102.78,
-    roi: 7.73,
+    roi: 8.59,
     status: 'current',
   },
   '2024/2025': {
-    totalBets: 1967,
-    profit: 233.73,
-    roi: 12.73,
+    totalBets: 1946,
+    profit: 247.38,
+    roi: 12.71,
     status: 'completed',
   },
 }
 
 // All-time data (including January 2026)
 const FALLBACK_ALLTIME = {
-  totalBets: 3166,
-  profit: 336.51,
-  roi: 10.63,
+  totalBets: 3142,
+  profit: 350.16,
+  roi: 11.08,
 }
 
 // Cache for fetched data
