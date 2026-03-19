@@ -110,6 +110,9 @@ export default function Hero() {
             Copy every bet I place
           </a>
 
+        </div>
+
+        <div className="flex justify-center animate-fade-up delay-400 w-full px-4 sm:px-0 mt-3">
           <a
             href="https://freebets.world/ms25"
             target="_blank"
