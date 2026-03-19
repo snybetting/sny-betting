@@ -1,4 +1,4 @@
-import { Send, Users, ArrowRight } from 'lucide-react'
+import { Send, Users, ArrowRight, Gift } from 'lucide-react'
 import logo from '../assets/logo.png'
 
 export default function Hero() {
@@ -108,6 +108,16 @@ export default function Hero() {
           >
             <Users className="w-5 h-5" />
             Copy every bet I place
+          </a>
+
+          <a
+            href="https://freebets.world/ms25"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
+          >
+            <Gift className="w-5 h-5" />
+            Click here for over £700 in free bets
           </a>
         </div>
       </div>
