@@ -54,7 +54,7 @@ export default function Hero() {
           href="https://t.me/+KRBoF_MnFuhhZDVk"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-6 mb-10 animate-fade-up rounded-full transition-shadow duration-300 ease-out hover:shadow-[0_0_15px_rgba(208,240,192,0.25),0_0_30px_rgba(208,240,192,0.15)]"
+          className="inline-flex items-center gap-2 mt-10 mb-10 animate-fade-up rounded-full transition-shadow duration-300 ease-out hover:shadow-[0_0_15px_rgba(208,240,192,0.25),0_0_30px_rgba(208,240,192,0.15)]"
           style={{
             backgroundColor: '#D0F0C0',
             color: '#333333',
