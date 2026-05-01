@@ -25,6 +25,7 @@ const CUMULATIVE_PROFIT_DATA = [
   { month: 'Jan 26', profit: 350.16 },
   { month: 'Feb 26', profit: 360.08 },
   { month: 'Mar 26', profit: 370.34 },
+  { month: 'Apr 26', profit: 393.43 },
 ]
 
 // Google Sheets CSV URL (same as calculator)
@@ -33,6 +34,7 @@ const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvpM86U
 // Monthly data (most recent first) - August 2024 to January 2026
 const FALLBACK_MONTHLY = [
   // 25/26 Season
+  { month: 'April 2026', profit: 23.09, bets: 136, roi: 11.52 },
   { month: 'March 2026', profit: 10.26, bets: 130, roi: 3.95 },
   { month: 'February 2026', profit: 11.91, bets: 119, roi: 4.82 },
   { month: 'January 2026', profit: -13.52, bets: 197, roi: -6.2 },
@@ -59,9 +61,9 @@ const FALLBACK_MONTHLY = [
 // Season data (including January 2026)
 const FALLBACK_SEASONS = {
   '2025/2026': {
-    totalBets: 1445,
-    profit: 124.95,
-    roi: 6.80,
+    totalBets: 1581,
+    profit: 148.04,
+    roi: 7.27,
     status: 'current',
   },
   '2024/2025': {
@@ -74,9 +76,9 @@ const FALLBACK_SEASONS = {
 
 // All-time data (including January 2026)
 const FALLBACK_ALLTIME = {
-  totalBets: 3395,
-  profit: 370.34,
-  roi: 10.10,
+  totalBets: 3531,
+  profit: 393.43,
+  roi: 10.17,
 }
 
 // Cache for fetched data
