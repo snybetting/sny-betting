@@ -3,15 +3,15 @@ import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'l
 
 // All Time data (including January 2026)
 const ALL_TIME_DATA = {
-  totalBets: 3642,
-  profitUnits: 417.85,
-  roi: 10.39,
-  totalStaked: 4020.23,
+  totalBets: 3670,
+  profitUnits: 424.68,
+  roi: 10.46,
+  totalStaked: 4058.98,
 }
 
 // Monthly data hardcoded from spreadsheet (oldest to newest)
 // 24/25 Season: 1,967 bets, 233.73 profit, 1,836.75 staked, 12.73% ROI
-// 25/26 Season (Aug-Jun): 1,692 bets, 172.46 profit, 2,189.73 staked, 7.87% ROI
+// 25/26 Season (Aug-Jul): 1,720 bets, 179.29 profit, 2,228.48 staked, 8.04% ROI
 const MONTHLY_DATA = [
   // 24/25 Season
   { month: 'August 2024', bets: 427, profit: 48.43, staked: 347.95 },
@@ -38,6 +38,7 @@ const MONTHLY_DATA = [
   { month: 'April 2026', bets: 136, profit: 23.09, staked: 200.50 },
   { month: 'May 2026', bets: 49, profit: 7.08, staked: 72.33 },
   { month: 'June 2026', bets: 62, profit: 17.34, staked: 79.95 },
+  { month: 'July 2026', bets: 28, profit: 6.83, staked: 38.75 },
 ]
 
 // Generate month options from Aug 2024 to current (newest first in dropdown)
