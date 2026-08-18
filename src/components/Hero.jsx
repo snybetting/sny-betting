@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 
 export default function Hero() {
   return (
-    <section className="relative h-[78vh] flex flex-col items-center justify-center px-6 overflow-hidden bg-[#333333]">
+    <section className="relative hero-viewport flex flex-col items-center justify-center px-6 overflow-hidden bg-[#333333]">
       {/* Animated gradient background */}
       <div
         className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
@@ -73,6 +73,11 @@ export default function Hero() {
             <img
               src={logo}
               alt="SNY Betting"
+              width="320"
+              height="315"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

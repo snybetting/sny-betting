@@ -4,17 +4,34 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- First-paint background: must match body bg in src/index.css so the
+         browser never flashes white before the CSS bundle arrives. -->
+    <meta name="theme-color" content="#333333" />
+    <meta name="color-scheme" content="dark" />
+    <style>
+      html, body { background-color: #333333; }
+    </style>
+
     <meta name="description" content="Bet on sports like a professional" />
     <title>@SNYbetting</title>
+    <link rel="canonical" href="https://snybetting.com/" />
 
     <!-- Open Graph / Social Sharing -->
     <meta property="og:title" content="SNY Betting" />
     <meta property="og:description" content="Bet on sports like a professional" />
     <meta property="og:site_name" content="SNY Betting" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://snybetting.com/" />
     <meta property="og:image" content="https://snybetting.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1181" />
+    <meta property="og:image:alt" content="SNY Betting" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SNY Betting" />
+    <meta name="twitter:description" content="Bet on sports like a professional" />
     <meta name="twitter:image" content="https://snybetting.com/og-image.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

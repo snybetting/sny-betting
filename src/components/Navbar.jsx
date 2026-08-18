@@ -45,6 +45,10 @@ export default function Navbar() {
           <img
             src={logo}
             alt="SNY Betting"
+            width="320"
+            height="315"
+            loading="eager"
+            decoding="async"
             className="w-8 h-8 rounded-full object-cover"
           />
         </a>

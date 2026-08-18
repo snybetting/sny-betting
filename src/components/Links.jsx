@@ -38,14 +38,13 @@ const LINKS = [
   },
 ]
 
-function LinkCard({ title, href, icon: Icon, delay }) {
+function LinkCard({ title, href, icon: Icon }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex items-center justify-between p-5 rounded-xl transition-all duration-300 bg-[#404040] hover:bg-[#4a4a4a] hover:-translate-y-1 shadow-lg"
-      style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex items-center gap-4">
         <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/20 text-primary group-hover:bg-primary/30 transition-colors">
@@ -95,8 +94,8 @@ export default function Links() {
 
         {/* Links grid - 2x2 layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {LINKS.map((link, index) => (
-            <LinkCard key={index} {...link} delay={index * 100} />
+          {LINKS.map((link) => (
+            <LinkCard key={link.href} {...link} />
           ))}
         </div>
       </div>

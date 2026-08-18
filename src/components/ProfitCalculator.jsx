@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { TrendingUp, Target, BarChart3, Calendar, Loader2, ChevronDown } from 'lucide-react'
+import { TrendingUp, Target, BarChart3, Calendar, ChevronDown } from 'lucide-react'
 
 // All Time data (including January 2026)
 const ALL_TIME_DATA = {
@@ -96,7 +96,7 @@ function StatCard({ icon: Icon, label, value, prefix, suffix, decimals, highligh
         <Icon className="w-4 h-4" />
         <span className="text-xs font-medium uppercase tracking-wide">{label}</span>
       </div>
-      <div className={`text-2xl md:text-3xl lg:text-4xl ${highlight ? 'text-dark' : 'text-dark'}`}>
+      <div className="text-2xl md:text-3xl lg:text-4xl text-dark">
         <AnimatedNumber
           value={value}
           prefix={prefix}
@@ -138,7 +138,6 @@ export default function ProfitCalculator() {
   const [inputValue, setInputValue] = useState('10')
   const [selectedMonth, setSelectedMonth] = useState('August 2024')
   const [isVisible, setIsVisible] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const sectionRef = useRef(null)
 
   // Calculate data based on selected month
@@ -236,49 +235,42 @@ export default function ProfitCalculator() {
             </div>
           </div>
 
-          {/* Loading state */}
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 text-primary animate-spin" />
-            </div>
-          ) : (
-            /* Results grid - equal width columns */
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <StatCard
-                icon={TrendingUp}
-                label="Total Profit"
-                value={totalProfit}
-                prefix="£"
-                decimals={0}
-                highlight={true}
-                valueKey={`profit-${inputValue}-${selectedMonth}`}
-              />
-              <StatCard
-                icon={Target}
-                label="ROI"
-                value={data.roi}
-                suffix="%"
-                decimals={1}
-                highlight={true}
-                valueKey={`roi-${selectedMonth}`}
-              />
-              <StatCard
-                icon={BarChart3}
-                label="Total Bets"
-                value={data.totalBets}
-                decimals={0}
-                valueKey={`bets-${selectedMonth}`}
-              />
-              <StatCard
-                icon={Calendar}
-                label="Avg Stake"
-                value={avgStake}
-                prefix="£"
-                decimals={2}
-                valueKey={`stake-${inputValue}-${selectedMonth}`}
-              />
-            </div>
-          )}
+          {/* Results grid - equal width columns */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <StatCard
+              icon={TrendingUp}
+              label="Total Profit"
+              value={totalProfit}
+              prefix="£"
+              decimals={0}
+              highlight={true}
+              valueKey={`profit-${inputValue}-${selectedMonth}`}
+            />
+            <StatCard
+              icon={Target}
+              label="ROI"
+              value={data.roi}
+              suffix="%"
+              decimals={1}
+              highlight={true}
+              valueKey={`roi-${selectedMonth}`}
+            />
+            <StatCard
+              icon={BarChart3}
+              label="Total Bets"
+              value={data.totalBets}
+              decimals={0}
+              valueKey={`bets-${selectedMonth}`}
+            />
+            <StatCard
+              icon={Calendar}
+              label="Avg Stake"
+              value={avgStake}
+              prefix="£"
+              decimals={2}
+              valueKey={`stake-${inputValue}-${selectedMonth}`}
+            />
+          </div>
 
           {/* Disclaimer */}
           <p className="text-dark/40 text-xs text-center mt-6">

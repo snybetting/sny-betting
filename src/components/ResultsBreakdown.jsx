@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { Loader2 } from 'lucide-react'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts'
 
 // All-time cumulative profit data for the graph (starts at 0)
@@ -90,15 +89,12 @@ const FALLBACK_ALLTIME = {
 // Cache for fetched data
 let cachedResultsData = null
 
-function MonthCard({ month, profit, bets, roi, delay }) {
+function MonthCard({ month, profit, bets, roi }) {
   const isPositive = profit >= 0
   const profitColor = isPositive ? 'text-primary' : 'text-red-400'
 
   return (
-    <div
-      className="bg-[#404040] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div className="bg-[#404040] rounded-xl p-5 min-w-[190px] flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       {/* Month label - small, lighter */}
       <div className="text-white/80 text-xs font-medium uppercase tracking-wide mb-3">{month}</div>
 
@@ -317,43 +313,45 @@ function parseResultsCSV(csvText) {
 
 export default function ResultsBreakdown() {
   const [isVisible, setIsVisible] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
   const [monthlyData, setMonthlyData] = useState(FALLBACK_MONTHLY)
   const [seasonData, setSeasonData] = useState(FALLBACK_SEASONS)
   const [allTimeData, setAllTimeData] = useState(FALLBACK_ALLTIME)
   const sectionRef = useRef(null)
 
-  // Fetch data from Google Sheets
+  // Refresh from Google Sheets in the background. The hardcoded fallbacks are
+  // already rendered, so this only ever updates values in place.
   useEffect(() => {
+    const controller = new AbortController()
+
     async function fetchData() {
       if (cachedResultsData) {
         setMonthlyData(cachedResultsData.monthly)
         setSeasonData(cachedResultsData.seasons)
         setAllTimeData(cachedResultsData.allTime)
-        setIsLoading(false)
         return
       }
 
       try {
-        const response = await fetch(SHEETS_CSV_URL)
+        const response = await fetch(SHEETS_CSV_URL, { signal: controller.signal })
         if (!response.ok) throw new Error('Failed to fetch')
 
         const csvText = await response.text()
         const parsedData = parseResultsCSV(csvText)
 
         cachedResultsData = parsedData
+        if (controller.signal.aborted) return
         setMonthlyData(parsedData.monthly)
         setSeasonData(parsedData.seasons)
         setAllTimeData(parsedData.allTime)
       } catch (error) {
+        if (error.name === 'AbortError') return
         console.error('Error fetching results data:', error)
         // Use fallback data on error
-      } finally {
-        setIsLoading(false)
       }
     }
 
     fetchData()
+    return () => controller.abort()
   }, [])
 
   // Intersection observer for animations
@@ -393,46 +391,34 @@ export default function ResultsBreakdown() {
 
         {/* Monthly performance - horizontal scroll */}
         <div className="mb-8">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 text-primary animate-spin" />
+          <div className="overflow-x-auto pb-4 -mx-6 pl-6 pr-3 md:px-6 scrollbar-hide">
+            <div className="flex gap-4 md:gap-5 py-1">
+              {monthlyData.map((data) => (
+                <MonthCard key={data.month} {...data} />
+              ))}
             </div>
-          ) : (
-            <div className="overflow-x-auto overflow-y-visible pb-4 -mx-6 pl-6 pr-3 md:px-6 scrollbar-hide">
-              <div className="flex gap-4 md:gap-5 py-1">
-                {monthlyData.map((data, index) => (
-                  <MonthCard key={data.month} {...data} delay={index * 100} />
-                ))}
-              </div>
-            </div>
-          )}
+          </div>
         </div>
 
         {/* Season breakdown */}
         <div>
-          {isLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 text-primary animate-spin" />
+          <div className="space-y-4">
+            {/* All Time card - centered on top with embedded graph */}
+            <div className="max-w-2xl mx-auto">
+              <AllTimeCard data={allTimeData} />
             </div>
-          ) : (
-            <div className="space-y-4">
-              {/* All Time card - centered on top with embedded graph */}
-              <div className="max-w-2xl mx-auto">
-                <AllTimeCard data={allTimeData} />
-              </div>
 
-              {/* Season cards - two columns */}
-              <div className="grid md:grid-cols-2 gap-4">
-                {Object.entries(seasonData).map(([season, data]) => (
-                  <SeasonCard
-                    key={season}
-                    season={season}
-                    data={data}
-                  />
-                ))}
-              </div>
+            {/* Season cards - two columns */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {Object.entries(seasonData).map(([season, data]) => (
+                <SeasonCard
+                  key={season}
+                  season={season}
+                  data={data}
+                />
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>

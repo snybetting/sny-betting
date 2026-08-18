@@ -85,7 +85,9 @@ export default function Testimonials() {
     return 1
   }
 
-  const [visibleCount, setVisibleCount] = useState(1)
+  // Resolved during the first render (not in an effect) so the carousel never
+  // paints at 1-card width and then snaps to 2/3 on tablet and desktop.
+  const [visibleCount, setVisibleCount] = useState(getVisibleCount)
 
   useEffect(() => {
     const handleResize = () => {
@@ -97,6 +99,12 @@ export default function Testimonials() {
   }, [])
 
   const maxIndex = Math.max(0, TESTIMONIALS.length - visibleCount)
+
+  // Widening the viewport shrinks maxIndex; without this the track can be left
+  // scrolled past the last slide, showing blank space.
+  useEffect(() => {
+    setCurrentIndex(prev => Math.min(prev, maxIndex))
+  }, [maxIndex])
 
   const goToNext = () => {
     setCurrentIndex(prev => Math.min(prev + 1, maxIndex))
@@ -198,9 +206,9 @@ export default function Testimonials() {
                 transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
               }}
             >
-              {TESTIMONIALS.map((testimonial, index) => (
+              {TESTIMONIALS.map((testimonial) => (
                 <div
-                  key={index}
+                  key={testimonial.name}
                   className="flex-shrink-0 px-2 md:px-3"
                   style={{ width: `${100 / visibleCount}%` }}
                 >
@@ -217,7 +225,7 @@ export default function Testimonials() {
             <button
               key={index}
               onClick={() => goToIndex(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${
+              className={`dot-target w-2.5 h-2.5 rounded-full transition-all ${
                 index === currentIndex
                   ? 'bg-dark w-6'
                   : 'bg-dark/30 hover:bg-dark/50'

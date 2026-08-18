@@ -77,69 +77,6 @@ body {
   box-shadow: 0 0 15px rgba(208, 240, 192, 0.25), 0 0 30px rgba(208, 240, 192, 0.15);
 }
 
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: transparent;
-  color: #ffffff;
-  font-weight: 500;
-  padding: 0.875rem 1.75rem;
-  border-radius: 0.5rem;
-  border: 2px solid #ffffff;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-.btn-secondary-dark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: transparent;
-  color: #333333;
-  font-weight: 500;
-  padding: 0.875rem 1.75rem;
-  border-radius: 0.5rem;
-  border: 2px solid #333333;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-secondary-dark:hover {
-  background-color: #333333;
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-/* ============================================
-   PILL BADGE
-   ============================================ */
-
-.pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: #D0F0C0;
-  color: #333333;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
-}
-
-.pill-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(208, 240, 192, 0.3);
-}
-
 /* ============================================
    NAVIGATION
    ============================================ */
@@ -188,20 +125,6 @@ body {
   transform: translateY(-4px);
 }
 
-.card-dark {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.card-dark:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(208, 240, 192, 0.3);
-  transform: translateY(-4px);
-}
-
 .card-accent {
   background-color: #ffffff;
   border: 2px solid #D0F0C0;
@@ -231,21 +154,12 @@ body {
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
+/* `both` (not `forwards`) is required: with `forwards` the `from` keyframe is
+   NOT applied during animation-delay, so delayed elements paint fully visible
+   and then snap to opacity:0 when the animation starts. That was the
+   above-the-fold flicker on first load. */
 .animate-fade-up {
-  animation: fade-up 0.6s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+  animation: fade-up 0.6s ease-out both;
 }
 
 /* Staggered animation delays */
@@ -285,6 +199,13 @@ body {
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
+/* Hero height: vh first as the fallback for older browsers, then dvh so the
+   mobile address bar does not make the section taller than the visible area. */
+.hero-viewport {
+  height: 78vh;
+  height: 78dvh;
+}
+
 /* ============================================
    UTILITY CLASSES
    ============================================ */
@@ -297,6 +218,19 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Carousel dot indicators: keep the 10px visual dot but expand the touch
+   target vertically. Horizontal expansion is capped at half the 8px gap so
+   adjacent targets meet without overlapping. */
+.dot-target {
+  position: relative;
+}
+
+.dot-target::before {
+  content: '';
+  position: absolute;
+  inset: -12px -4px;
 }
 
 /* Number inputs */
@@ -322,55 +256,6 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-
-/* Link hover effect */
-.link-hover {
-  position: relative;
-}
-
-.link-hover::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #D0F0C0;
-  transition: width 0.3s ease;
-}
-
-.link-hover:hover::after {
-  width: 100%;
-}
-
-/* Hamburger menu */
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-}
-
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
 
 /* Floating hamburger icon (mobile) */
 .hamburger-icon {
@@ -441,8 +326,7 @@ button:focus-visible {
 
 /* Mobile button full width */
 @media (max-width: 639px) {
-  .btn-primary,
-  .btn-secondary {
+  .btn-primary {
     width: 100%;
     justify-content: center;
   }

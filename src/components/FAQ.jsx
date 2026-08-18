@@ -67,7 +67,7 @@ const FAQ_DATA = [
   },
 ]
 
-function AccordionItem({ question, answer, isOpen, onClick }) {
+function AccordionItem({ question, answer, isOpen, onClick, id }) {
   const contentRef = useRef(null)
   const [height, setHeight] = useState(0)
 
@@ -81,6 +81,9 @@ function AccordionItem({ question, answer, isOpen, onClick }) {
     <div className="bg-[#404040] rounded-xl overflow-hidden">
       <button
         onClick={onClick}
+        aria-expanded={isOpen}
+        aria-controls={`faq-panel-${id}`}
+        id={`faq-trigger-${id}`}
         className="w-full flex items-center justify-between p-5 text-left hover:bg-[#4a4a4a] transition-colors"
       >
         <span className="font-semibold text-white pr-4">{question}</span>
@@ -91,6 +94,9 @@ function AccordionItem({ question, answer, isOpen, onClick }) {
         />
       </button>
       <div
+        id={`faq-panel-${id}`}
+        role="region"
+        aria-labelledby={`faq-trigger-${id}`}
         className="transition-all duration-300 ease-out overflow-hidden"
         style={{ height }}
       >
@@ -163,7 +169,8 @@ export default function FAQ() {
         <div className="space-y-3">
           {FAQ_DATA.map((item, index) => (
             <AccordionItem
-              key={index}
+              key={item.question}
+              id={index}
               question={item.question}
               answer={item.answer}
               isOpen={openIndex === index}
