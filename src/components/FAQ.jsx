@@ -78,6 +78,16 @@ function AccordionItem({ question, answer, isOpen, onClick, id }) {
     }
   }, [isOpen])
 
+  // Delegated so the answers stay plain content: any Telegram link inside this
+  // answer reports against the question it sits under. The links themselves are
+  // still ordinary anchors, so navigation is untouched.
+  const handleAnswerClick = (e) => {
+    const link = e.target.closest?.('a[href^="https://t.me/"]')
+    if (link) {
+      capture('faq_telegram_link_click', { question })
+    }
+  }
+
   return (
     <div className="bg-[#404040] rounded-xl overflow-hidden">
       <button
@@ -101,7 +111,11 @@ function AccordionItem({ question, answer, isOpen, onClick, id }) {
         className="transition-all duration-300 ease-out overflow-hidden"
         style={{ height }}
       >
-        <div ref={contentRef} className="px-5 pb-5 text-white/70 leading-relaxed">
+        <div
+          ref={contentRef}
+          onClick={handleAnswerClick}
+          className="px-5 pb-5 text-white/70 leading-relaxed"
+        >
           {answer}
         </div>
       </div>

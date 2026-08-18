@@ -33,11 +33,13 @@ const LINKS = [
     title: 'Message me directly',
     href: 'https://t.me/snybetting',
     icon: MessageCircle,
+    event: 'getstarted_direct_message_click',
   },
   {
     title: 'Follow me on Twitter',
     href: 'https://x.com/snybetting',
     icon: XIcon,
+    event: 'getstarted_twitter_click',
   },
 ]
 

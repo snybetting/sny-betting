@@ -4,7 +4,7 @@ import { capture } from '../lib/analytics'
 
 export default function Hero() {
   return (
-    <section className="relative hero-viewport flex flex-col items-center justify-center px-6 overflow-hidden bg-[#333333]">
+    <section id="hero" className="relative hero-viewport flex flex-col items-center justify-center px-6 overflow-hidden bg-[#333333]">
       {/* Animated gradient background */}
       <div
         className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
@@ -55,6 +55,7 @@ export default function Hero() {
           href="https://t.me/+KRBoF_MnFuhhZDVk"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => capture('hero_pill_badge_click')}
           className="inline-flex items-center gap-2 mt-10 mb-10 animate-fade-up rounded-full transition-shadow duration-300 ease-out hover:shadow-[0_0_15px_rgba(208,240,192,0.25),0_0_30px_rgba(208,240,192,0.15)]"
           style={{
             backgroundColor: '#D0F0C0',

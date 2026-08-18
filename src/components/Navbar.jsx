@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import logo from '../assets/logo.png'
+import { capture } from '../lib/analytics'
 
 const NAV_LINKS = [
   { label: 'Results', href: '#results' },
@@ -7,7 +8,7 @@ const NAV_LINKS = [
   { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Get Started', href: '#links' },
-  { label: 'Contact Me', href: 'https://t.me/snybetting', external: true },
+  { label: 'Contact Me', href: 'https://t.me/snybetting', external: true, event: 'navbar_contact_click' },
 ]
 
 export default function Navbar() {
@@ -59,7 +60,11 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              onClick={link.external ? undefined : (e) => handleNavClick(e, link.href)}
+              onClick={
+                link.external
+                  ? () => link.event && capture(link.event)
+                  : (e) => handleNavClick(e, link.href)
+              }
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
               className="nav-link"
@@ -94,7 +99,14 @@ export default function Navbar() {
           <a
             key={link.href}
             href={link.href}
-            onClick={link.external ? () => setIsMobileMenuOpen(false) : (e) => handleNavClick(e, link.href)}
+            onClick={
+              link.external
+                ? () => {
+                    if (link.event) capture(link.event)
+                    setIsMobileMenuOpen(false)
+                  }
+                : (e) => handleNavClick(e, link.href)
+            }
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
             className="relative z-10 text-white text-2xl font-semibold py-4 px-8 rounded-xl hover:text-primary hover:bg-white/5 transition-all"
