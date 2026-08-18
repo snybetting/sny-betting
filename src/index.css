@@ -199,11 +199,17 @@ body {
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Hero height: vh first as the fallback for older browsers, then dvh so the
-   mobile address bar does not make the section taller than the visible area. */
+/* Hero height.
+   - svh, not dvh: svh is locked to the address-bar-visible state, so the hero
+     height never changes as the bar retracts and there is no shift on scroll.
+     dvh tracks the bar and resolves to its smallest value on first load.
+   - min-height, not height: the content stack is ~566px and 78% of a short
+     mobile viewport is less than that, so a fixed height cropped the last CTA
+     against overflow:hidden. min-height lets the section grow instead.
+   - vh first as the fallback for browsers without svh (pre-Safari 15.4). */
 .hero-viewport {
-  height: 78vh;
-  height: 78dvh;
+  min-height: 78vh;
+  min-height: 78svh;
 }
 
 /* ============================================

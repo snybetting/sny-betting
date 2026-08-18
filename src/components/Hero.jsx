@@ -4,7 +4,7 @@ import { capture } from '../lib/analytics'
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative hero-viewport flex flex-col items-center justify-center px-6 overflow-hidden bg-[#333333]">
+    <section id="hero" className="relative hero-viewport flex flex-col items-center justify-center px-6 py-8 overflow-hidden bg-[#333333]">
       {/* Animated gradient background */}
       <div
         className="absolute inset-0 z-0 pointer-events-none animate-gradient-shift"
