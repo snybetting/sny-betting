@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
+import { capture } from '../lib/analytics'
 
 // EDIT TESTIMONIALS HERE - Add new testimonials to this array
 // Ordered by impact: detailed endorsements first
@@ -106,17 +107,21 @@ export default function Testimonials() {
     setCurrentIndex(prev => Math.min(prev, maxIndex))
   }, [maxIndex])
 
-  const goToNext = () => {
-    setCurrentIndex(prev => Math.min(prev + 1, maxIndex))
+  // Single entry point for arrows, dots and swipes so an advance is reported
+  // once, and only when the index actually changes. The resize clamp above sets
+  // state directly and so is deliberately not reported.
+  const goTo = (next) => {
+    const clamped = Math.max(0, Math.min(next, maxIndex))
+    if (clamped === currentIndex) return
+    setCurrentIndex(clamped)
+    capture('testimonial_viewed', { index: clamped })
   }
 
-  const goToPrev = () => {
-    setCurrentIndex(prev => Math.max(prev - 1, 0))
-  }
+  const goToNext = () => goTo(currentIndex + 1)
 
-  const goToIndex = (index) => {
-    setCurrentIndex(Math.min(index, maxIndex))
-  }
+  const goToPrev = () => goTo(currentIndex - 1)
+
+  const goToIndex = (index) => goTo(index)
 
   // Touch handlers for swipe
   const onTouchStart = (e) => {

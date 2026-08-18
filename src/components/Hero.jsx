@@ -1,5 +1,6 @@
 import { Send, Users, ArrowRight, Gift } from 'lucide-react'
 import logo from '../assets/logo.png'
+import { capture } from '../lib/analytics'
 
 export default function Hero() {
   return (
@@ -99,6 +100,7 @@ export default function Hero() {
             href="https://t.me/+KRBoF_MnFuhhZDVk"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => capture('hero_free_telegram_click')}
             className="btn-primary w-full sm:w-auto justify-center"
           >
             <Send className="w-5 h-5" />
@@ -109,6 +111,7 @@ export default function Hero() {
             href="https://t.me/snybettingbot?start=-plans"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => capture('hero_vip_bot_click')}
             className="btn-primary w-full sm:w-auto justify-center"
           >
             <Users className="w-5 h-5" />
@@ -122,6 +125,7 @@ export default function Hero() {
             href="https://freebets.world/ms25"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => capture('free_bets_affiliate_click')}
             className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-200 text-base"
           >
             <Gift className="w-5 h-5" />

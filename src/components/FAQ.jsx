@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { capture } from '../lib/analytics'
 
 const FAQ_DATA = [
   {
@@ -131,7 +132,11 @@ export default function FAQ() {
   }, [])
 
   const handleClick = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
+    const isOpening = openIndex !== index
+    setOpenIndex(isOpening ? index : null)
+    if (isOpening) {
+      capture('faq_opened', { question: FAQ_DATA[index].question })
+    }
   }
 
   return (

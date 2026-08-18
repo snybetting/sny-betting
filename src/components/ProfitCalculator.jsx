@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { TrendingUp, Target, BarChart3, Calendar, ChevronDown } from 'lucide-react'
+import { capture } from '../lib/analytics'
 
 // All Time data (including January 2026)
 const ALL_TIME_DATA = {
@@ -165,6 +166,31 @@ export default function ProfitCalculator() {
   const unitValue = parseFloat(inputValue) || 0
   const totalProfit = data.profitUnits * unitValue
   const avgStake = data.totalBets > 0 ? (data.totalStaked / data.totalBets) * unitValue : 0
+
+  // Report calculator use, debounced by 500ms so typing a unit value fires once
+  // rather than once per keystroke. Seeding the ref on the first run means the
+  // initial render never reports, in dev under StrictMode included.
+  const lastCapturedRef = useRef(null)
+
+  useEffect(() => {
+    const signature = `${unitValue}|${selectedMonth}`
+
+    if (lastCapturedRef.current === null) {
+      lastCapturedRef.current = signature
+      return
+    }
+    if (lastCapturedRef.current === signature) return
+
+    const timer = setTimeout(() => {
+      lastCapturedRef.current = signature
+      capture('calculator_used', {
+        unit_value: unitValue,
+        results_from_month: selectedMonth,
+      })
+    }, 500)
+
+    return () => clearTimeout(timer)
+  }, [unitValue, selectedMonth])
 
   return (
     <section

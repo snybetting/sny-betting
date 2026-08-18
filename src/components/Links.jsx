@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { MessageCircle, Users, ArrowRight } from 'lucide-react'
+import { capture } from '../lib/analytics'
 
 // X (Twitter) icon
 const XIcon = () => (
@@ -20,11 +21,13 @@ const LINKS = [
     title: 'Get free bets daily',
     href: 'https://t.me/+KRBoF_MnFuhhZDVk',
     icon: TelegramIcon,
+    event: 'getstarted_free_telegram_click',
   },
   {
     title: 'Copy every bet I place',
     href: 'https://t.me/snybettingbot?start=-plans',
     icon: Users,
+    event: 'getstarted_vip_bot_click',
   },
   {
     title: 'Message me directly',
@@ -38,12 +41,13 @@ const LINKS = [
   },
 ]
 
-function LinkCard({ title, href, icon: Icon }) {
+function LinkCard({ title, href, icon: Icon, event }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={event ? () => capture(event) : undefined}
       className="group flex items-center justify-between p-5 rounded-xl transition-all duration-300 bg-[#404040] hover:bg-[#4a4a4a] hover:-translate-y-1 shadow-lg"
     >
       <div className="flex items-center gap-4">
