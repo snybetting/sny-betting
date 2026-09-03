@@ -4,15 +4,16 @@ import { capture } from '../lib/analytics'
 
 // All Time data (including January 2026)
 const ALL_TIME_DATA = {
-  totalBets: 3670,
-  profitUnits: 424.68,
-  roi: 10.46,
-  totalStaked: 4058.98,
+  totalBets: 3701,
+  profitUnits: 445.37,
+  roi: 10.86,
+  totalStaked: 4101.98,
 }
 
 // Monthly data hardcoded from spreadsheet (oldest to newest)
 // 24/25 Season: 1,967 bets, 233.73 profit, 1,836.75 staked, 12.73% ROI
 // 25/26 Season (Aug-Jul): 1,720 bets, 179.29 profit, 2,228.48 staked, 8.04% ROI
+// 26/27 Season (Aug): 31 bets, 20.69 profit, 43.00 staked, 48.12% ROI
 const MONTHLY_DATA = [
   // 24/25 Season
   { month: 'August 2024', bets: 427, profit: 48.43, staked: 347.95 },
@@ -40,6 +41,8 @@ const MONTHLY_DATA = [
   { month: 'May 2026', bets: 49, profit: 7.08, staked: 72.33 },
   { month: 'June 2026', bets: 62, profit: 17.34, staked: 79.95 },
   { month: 'July 2026', bets: 28, profit: 6.83, staked: 38.75 },
+  // 26/27 Season
+  { month: 'August 2026', bets: 31, profit: 20.69, staked: 43.00 },
 ]
 
 // Generate month options from Aug 2024 to current (newest first in dropdown)
