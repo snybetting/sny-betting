@@ -381,6 +381,14 @@ export default function ResultsBreakdown() {
     return () => observer.disconnect()
   }, [])
 
+  // Current season renders full width on its own row; past seasons sit
+  // side by side below it, oldest first.
+  const seasonEntries = Object.entries(seasonData)
+  const currentSeason = seasonEntries.find(([, data]) => data.status === 'current')
+  const pastSeasons = seasonEntries
+    .filter(([season]) => season !== currentSeason?.[0])
+    .sort(([a], [b]) => a.localeCompare(b))
+
   return (
     <section
       ref={sectionRef}
@@ -417,9 +425,18 @@ export default function ResultsBreakdown() {
               <AllTimeCard data={allTimeData} />
             </div>
 
-            {/* Season cards - two columns */}
+            {/* Current season - full width on its own row */}
+            {currentSeason && (
+              <SeasonCard
+                key={currentSeason[0]}
+                season={currentSeason[0]}
+                data={currentSeason[1]}
+              />
+            )}
+
+            {/* Past seasons - two columns, oldest first */}
             <div className="grid md:grid-cols-2 gap-4">
-              {Object.entries(seasonData).map(([season, data]) => (
+              {pastSeasons.map(([season, data]) => (
                 <SeasonCard
                   key={season}
                   season={season}
