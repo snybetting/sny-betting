@@ -12,7 +12,7 @@ const ALL_TIME_DATA = {
 
 // Monthly data hardcoded from spreadsheet (oldest to newest)
 // 24/25 Season: 1,967 bets, 233.73 profit, 1,836.75 staked, 12.73% ROI
-// 25/26 Season (Aug-Jul): 1,720 bets, 179.29 profit, 2,228.48 staked, 8.04% ROI
+// 25/26 Season (Aug-Jul): 1,720 bets, 179.29 profit, 2,228.48 staked, 8.05% ROI
 // 26/27 Season (Aug-Oct): 227 bets, 35.34 profit, 326.75 staked, 10.82% ROI
 const MONTHLY_DATA = [
   // 24/25 Season
